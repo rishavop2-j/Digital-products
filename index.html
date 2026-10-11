@@ -29,11 +29,13 @@
       <button onclick="closeCheckout()" class="absolute top-2 right-3 text-slate-400 text-lg">✕</button>
       <div id="checkout-body">
         <h3 id="modal-title" class="text-sm font-bold text-white">Product Title</h3>
+        
         <div class="mt-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-center">
-          <input type="text" id="coupon-box" placeholder="COUPON CODE" class="w-full bg-slate-900 border border-slate-700 px-2 py-1.5 rounded text-xs uppercase text-center text-white outline-none">
+          <input type="text" id="coupon-box" placeholder="ENTER COUPON CODE" class="w-full bg-slate-900 border border-slate-700 px-2 py-1.5 rounded text-xs uppercase text-center text-white outline-none">
           <button onclick="applyCoupon()" class="w-full mt-1.5 py-1.5 bg-slate-800 text-emerald-400 rounded text-xs font-semibold">Apply Coupon</button>
           <p id="coupon-alert" class="text-[10px] mt-1 hidden"></p>
         </div>
+
         <div class="mt-3 bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
           <p class="text-xs font-semibold">Pay <span id="modal-pay-amount" class="text-emerald-400 font-bold">₹0</span></p>
           <div class="bg-white p-2 rounded-lg inline-block mt-2">
@@ -41,13 +43,16 @@
           </div>
           <p class="text-[10px] text-slate-400 mt-1 font-mono">UPI: <span id="display-upi-id" class="text-emerald-400 font-semibold select-all"></span></p>
         </div>
+
         <div class="mt-3">
           <label class="block text-[10px] text-slate-300 mb-1">Enter 12-Digit UTR Number</label>
           <input type="text" id="utr-number" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-slate-950 border border-slate-700 px-2 py-1.5 rounded text-xs text-white outline-none">
           <p id="utr-error" class="text-rose-400 text-[10px] mt-0.5 hidden">Valid 12-digit UTR enter karein.</p>
         </div>
+
         <button onclick="verifyPay()" class="w-full mt-3 py-2 bg-emerald-500 text-black font-bold rounded-lg text-xs uppercase">Verify & Download</button>
       </div>
+
       <div id="download-body" class="hidden text-center py-4">
         <div class="text-emerald-400 text-2xl mb-1">✓</div>
         <h4 class="text-sm font-bold text-white">Payment Received!</h4>
@@ -93,7 +98,13 @@
       
       <input type="text" id="a-title" placeholder="Product Title" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
       <textarea id="a-desc" placeholder="Product Description" rows="2" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white"></textarea>
-      <input type="text" id="a-img" placeholder="Image URL (Unsplash or image link)" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      
+      <!-- Gallery Upload Support -->
+      <div>
+        <label class="block text-[10px] text-slate-400 mb-0.5">Select Image from Phone Gallery</label>
+        <input type="file" id="a-file-img" accept="image/*" class="w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-slate-800 file:text-emerald-400">
+        <input type="hidden" id="a-img-base64">
+      </div>
       
       <div class="grid grid-cols-2 gap-2">
         <input type="number" id="a-price" placeholder="Selling Price (₹)" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
@@ -102,14 +113,26 @@
 
       <input type="text" id="a-upi" value="8240966365@fam" placeholder="UPI ID" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
       
-      <div class="grid grid-cols-2 gap-2">
-        <input type="text" id="a-coupon" placeholder="Coupon Code" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs uppercase text-white">
-        <input type="number" id="a-discount" placeholder="Discount %" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      <!-- Up to 5 Coupons Section -->
+      <div class="bg-slate-950 p-2 rounded-lg border border-slate-800 space-y-1.5">
+        <p class="text-[10px] font-bold text-emerald-400 uppercase">Manage Coupons (Up to 5)</p>
+        <div class="grid grid-cols-2 gap-1.5">
+          <input type="text" id="c-code-1" placeholder="Code 1 (e.g. SAVE10)" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] uppercase text-white">
+          <input type="number" id="c-disc-1" placeholder="Disc 1 %" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] text-white">
+          <input type="text" id="c-code-2" placeholder="Code 2" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] uppercase text-white">
+          <input type="number" id="c-disc-2" placeholder="Disc 2 %" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] text-white">
+          <input type="text" id="c-code-3" placeholder="Code 3" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] uppercase text-white">
+          <input type="number" id="c-disc-3" placeholder="Disc 3 %" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] text-white">
+          <input type="text" id="c-code-4" placeholder="Code 4" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] uppercase text-white">
+          <input type="number" id="c-disc-4" placeholder="Disc 4 %" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] text-white">
+          <input type="text" id="c-code-5" placeholder="Code 5" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] uppercase text-white">
+          <input type="number" id="c-disc-5" placeholder="Disc 5 %" class="bg-slate-900 border border-slate-700 px-1.5 py-1 rounded text-[11px] text-white">
+        </div>
       </div>
 
       <input type="text" id="a-link" placeholder="Download Link (product.pdf or Drive link)" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
       
-      <div class="pt-1">
+      <div>
         <label class="block text-[10px] text-emerald-400 font-semibold mb-0.5">Product Privacy Code (Secret Access Key)</label>
         <input type="password" id="a-pass" placeholder="Privacy Code (required to edit/delete)" class="w-full bg-slate-950 border border-emerald-500/50 px-2 py-1 rounded text-xs text-white">
       </div>
@@ -123,16 +146,29 @@
     let products = JSON.parse(localStorage.getItem('r_prods')) || [{
       id: 'p1', title: 'Ultimate Digital Guide', desc: 'Complete bundle and presets.',
       img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
-      price: 99, fakePrice: 499, upi: '8240966365@fam', coupon: 'SAVE20', discount: 20,
+      price: 99, fakePrice: 499, upi: '8240966365@fam',
+      coupons: [{ code: 'SAVE20', disc: 20 }, { code: 'OFF50', disc: 50 }],
       link: 'product.pdf', pass: '1234'
     }];
     let sel = null, disc = 0, tap = 0;
+
+    // Gallery Image converter
+    document.getElementById('a-file-img').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.getElementById('a-img-base64').value = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
 
     function render() {
       document.getElementById('products-grid').innerHTML = products.map(p => `
         <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg p-4 flex flex-col justify-between">
           <div>
-            <img src="${p.img}" class="w-full h-40 object-cover rounded-lg mb-3">
+            <img src="${p.img}" class="w-full h-40 object-cover rounded-lg mb-3 bg-slate-800">
             <h3 class="font-bold text-white text-sm">${p.title}</h3>
             <p class="text-xs text-slate-400 mt-1">${p.desc}</p>
           </div>
@@ -170,8 +206,9 @@
     function applyCoupon() {
       let c = document.getElementById('coupon-box').value.trim().toUpperCase();
       let a = document.getElementById('coupon-alert');
-      if (sel.coupon && c === sel.coupon.toUpperCase()) {
-        disc = sel.discount || 10;
+      let found = (sel.coupons || []).find(x => x.code === c);
+      if (found) {
+        disc = found.disc || 0;
         a.innerText = '✓ ' + disc + '% Off Applied!';
         a.className = 'text-[10px] mt-1 text-emerald-400 block';
         updateQR();
@@ -216,32 +253,40 @@
       } else alert('Wrong PIN!');
     }
 
-    // Modal Form controls
     function openProductForm(id = null) {
       document.getElementById('edit-product-id').value = id || '';
       document.getElementById('form-heading').innerText = id ? 'Edit Product' : 'Add New Product';
+      document.getElementById('a-file-img').value = '';
+
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`c-code-${i}`).value = '';
+        document.getElementById(`c-disc-${i}`).value = '';
+      }
 
       if (id) {
         let p = products.find(x => x.id === id);
         document.getElementById('a-title').value = p.title;
         document.getElementById('a-desc').value = p.desc;
-        document.getElementById('a-img').value = p.img;
+        document.getElementById('a-img-base64').value = p.img;
         document.getElementById('a-price').value = p.price;
         document.getElementById('a-fakeprice').value = p.fakePrice;
         document.getElementById('a-upi').value = p.upi;
-        document.getElementById('a-coupon').value = p.coupon;
-        document.getElementById('a-discount').value = p.discount;
         document.getElementById('a-link').value = p.link;
         document.getElementById('a-pass').value = p.pass;
+
+        (p.coupons || []).forEach((c, idx) => {
+          if (idx < 5) {
+            document.getElementById(`c-code-${idx+1}`).value = c.code;
+            document.getElementById(`c-disc-${idx+1}`).value = c.disc;
+          }
+        });
       } else {
         document.getElementById('a-title').value = '';
         document.getElementById('a-desc').value = '';
-        document.getElementById('a-img').value = '';
+        document.getElementById('a-img-base64').value = '';
         document.getElementById('a-price').value = '';
         document.getElementById('a-fakeprice').value = '';
         document.getElementById('a-upi').value = '8240966365@fam';
-        document.getElementById('a-coupon').value = '';
-        document.getElementById('a-discount').value = '';
         document.getElementById('a-link').value = '';
         document.getElementById('a-pass').value = '';
       }
@@ -258,16 +303,24 @@
       let d = document.getElementById('a-desc').value.trim();
       let p = parseInt(document.getElementById('a-price').value);
       let pass = document.getElementById('a-pass').value.trim();
+      let img = document.getElementById('a-img-base64').value || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';
 
       if (!t || !d || !p || !pass) return alert('Title, Desc, Price aur Privacy Code bharna zaroori hai!');
 
+      let coupons = [];
+      for (let i = 1; i <= 5; i++) {
+        let code = document.getElementById(`c-code-${i}`).value.trim().toUpperCase();
+        let disc = parseInt(document.getElementById(`c-disc-${i}`).value);
+        if (code && !isNaN(disc)) {
+          coupons.push({ code, disc });
+        }
+      }
+
       let data = {
-        title: t, desc: d, price: p, pass: pass,
+        title: t, desc: d, price: p, pass: pass, img: img,
         fakePrice: parseInt(document.getElementById('a-fakeprice').value) || p * 2,
-        img: document.getElementById('a-img').value.trim() || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
         upi: document.getElementById('a-upi').value.trim() || '8240966365@fam',
-        coupon: document.getElementById('a-coupon').value.trim().toUpperCase(),
-        discount: parseInt(document.getElementById('a-discount').value) || 0,
+        coupons: coupons,
         link: document.getElementById('a-link').value.trim() || 'product.pdf'
       };
 
@@ -293,7 +346,7 @@
         <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded border border-slate-800 text-xs">
           <div>
             <span class="font-bold text-white">${p.title}</span>
-            <span class="block text-[10px] text-slate-400">₹${p.price} • Coupon: ${p.coupon || 'None'}</span>
+            <span class="block text-[10px] text-slate-400">₹${p.price} • Coupons: ${(p.coupons || []).length}</span>
           </div>
           <div class="flex gap-1.5">
             <button onclick="editProdProtected('${p.id}')" class="text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded text-[10px] font-semibold">Edit ✏️</button>
@@ -303,18 +356,13 @@
       `).join('');
     }
 
-    // Protected Edit
     function editProdProtected(id) {
       let p = products.find(x => x.id === id);
       let inputPass = prompt(`"${p.title}" ko edit karne ke liye Privacy Code daliye:`);
-      if (inputPass === p.pass) {
-        openProductForm(id);
-      } else if (inputPass !== null) {
-        alert('Galat Privacy Code! Edit allow nahi hai.');
-      }
+      if (inputPass === p.pass) openProductForm(id);
+      else if (inputPass !== null) alert('Galat Privacy Code!');
     }
 
-    // Protected Delete
     function delProdProtected(id) {
       let p = products.find(x => x.id === id);
       let inputPass = prompt(`"${p.title}" ko delete karne ke liye Privacy Code daliye:`);
@@ -324,9 +372,7 @@
         render();
         renderAdminList();
         alert('Product delete ho gaya!');
-      } else if (inputPass !== null) {
-        alert('Galat Privacy Code!');
-      }
+      } else if (inputPass !== null) alert('Galat Privacy Code!');
     }
 
     render();
