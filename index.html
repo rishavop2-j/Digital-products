@@ -63,30 +63,34 @@
 
   <!-- Developer Main Panel Modal -->
   <div id="admin-modal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-xl p-4 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeAdmin()" class="absolute top-2 right-3 text-slate-400 text-lg">✕</button>
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-2xl p-6 relative min-h-[380px] max-h-[85vh] overflow-y-auto flex flex-col justify-start">
+      <!-- Close Button: High Z-index, Red Color & Positioned Away From Buttons -->
+      <button onclick="closeAdmin()" class="absolute top-3.5 right-4 text-rose-500 hover:text-rose-400 font-bold text-xl leading-none z-10 transition">✕</button>
       
       <!-- PIN Lock -->
-      <div id="admin-lock">
+      <div id="admin-lock" class="my-auto">
         <h3 class="text-sm font-bold text-white mb-2">Developer Security</h3>
-        <input type="password" id="admin-pin" placeholder="Default PIN: 1234" class="w-full bg-slate-950 border border-slate-700 px-2 py-1.5 rounded text-xs text-white mb-2 outline-none">
-        <button onclick="unlockAdmin()" class="w-full py-1.5 bg-emerald-500 text-black font-bold rounded text-xs">Unlock</button>
+        <input type="password" id="admin-pin" placeholder="Default PIN: DIGITAL2012" class="w-full bg-slate-950 border border-slate-700 px-3 py-2 rounded-lg text-xs text-white mb-3 outline-none">
+        <button onclick="unlockAdmin()" class="w-full py-2 bg-emerald-500 text-black font-bold rounded-lg text-xs transition">Unlock</button>
       </div>
 
       <!-- Clean Dashboard -->
-      <div id="admin-controls" class="hidden space-y-3">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-          <h4 class="text-xs font-bold text-white">Developer HQ</h4>
-          <button onclick="openProductForm()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-2.5 py-1 rounded text-xs">➕ Add Product</button>
+      <div id="admin-controls" class="hidden space-y-4 pt-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-3 pr-6">
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider">Developer HQ</h4>
+          <button onclick="openProductForm()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
+            <span>➕</span> Add Product
+          </button>
         </div>
 
         <div>
-          <h5 class="text-[11px] font-semibold text-slate-400 mb-2">Manage Listed Products</h5>
-          <div id="admin-list" class="space-y-2"></div>
+          <h5 class="text-[11px] font-semibold text-slate-400 mb-2.5">Manage Listed Products</h5>
+          <div id="admin-list" class="space-y-2.5"></div>
         </div>
       </div>
     </div>
   </div>
+  
 
   <!-- Product Add/Edit Form Modal -->
   <div id="product-form-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4">
