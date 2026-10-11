@@ -5,277 +5,271 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Store by Rishav</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
 
-  <!-- Navbar -->
-  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Rishav Store</span>
-        <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-mono">Digital HQ</span>
-      </div>
-      <button onclick="toggleAdminModal()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1.5">
-        <span>⚙️</span> Developer Panel
-      </button>
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-900/80 px-4 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-xl font-bold text-emerald-400">Rishav Store</span>
+      <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">Digital HQ</span>
     </div>
+    <button id="admin-open-btn" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-1.5 rounded-lg flex items-center gap-1">
+      ⚙️ Developer Panel
+    </button>
   </header>
 
-  <!-- Hero Section -->
-  <section class="max-w-5xl mx-auto px-4 pt-10 pb-6 text-center">
-    <h1 class="text-3xl md:text-4xl font-extrabold text-white">Instant Access Digital Downloads</h1>
-    <p class="text-slate-400 text-sm md:text-base mt-2 max-w-xl mx-auto">Get high quality digital assets, guides, and tools with instant delivery right after payment.</p>
-  </section>
+  <!-- Main Content -->
+  <main class="max-w-md w-full mx-auto px-4 py-8">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-extrabold text-white">Instant Access Downloads</h1>
+      <p class="text-xs text-slate-400 mt-1">Direct UPI payment se instant access unlock kijiye.</p>
+    </div>
 
-  <!-- Products Grid -->
-  <main class="max-w-6xl mx-auto px-4 pb-16 flex-1 w-full">
-    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Injected by JavaScript -->
+    <!-- Product Card -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+      <div class="h-48 bg-slate-800 relative">
+        <img id="card-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="Product" class="w-full h-full object-cover">
+        <span class="absolute top-3 right-3 bg-emerald-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Instant PDF</span>
+      </div>
+
+      <div class="p-5">
+        <h2 id="card-title" class="text-lg font-bold text-white">Ultimate Digital Guide</h2>
+        <p id="card-desc" class="text-xs text-slate-400 mt-1.5 leading-relaxed">Complete digital bundle, templates aur growth guides. Payment karte hi file turant download ho jayegi.</p>
+
+        <div class="flex items-baseline gap-2 my-4">
+          <span id="card-price" class="text-2xl font-extrabold text-emerald-400">₹99</span>
+          <span class="text-xs text-slate-500 line-through">₹499</span>
+          <span class="text-[10px] text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded font-semibold">80% OFF</span>
+        </div>
+
+        <button id="buy-now-btn" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs uppercase tracking-wider transition">
+          Buy Now via UPI
+        </button>
+      </div>
     </div>
   </main>
 
-  <!-- Checkout / Payment Modal -->
-  <div id="checkout-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">✕</button>
-      
-      <div id="modal-checkout-flow">
-        <h3 id="modal-product-title" class="text-lg font-bold text-white">Product Name</h3>
-        <p class="text-xs text-slate-400 mt-0.5">Secure payment via UPI QR</p>
+  <!-- Footer -->
+  <footer class="py-4 text-center text-xs text-slate-600 border-t border-slate-900">
+    © 2026 Rishav Store • Secure Digital Delivery
+  </footer>
 
-        <!-- Price Breakdown -->
-        <div class="mt-4 p-3 bg-slate-800/80 rounded-xl border border-slate-700/60 flex items-center justify-between">
-          <span class="text-xs text-slate-300">Final Price:</span>
-          <div class="text-right">
-            <span id="modal-original-price" class="text-xs line-through text-slate-500 mr-1.5"></span>
-            <span id="modal-final-price" class="text-xl font-extrabold text-emerald-400">₹0</span>
-          </div>
-        </div>
+  <!-- Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-2xl p-5 relative">
+      <button id="close-checkout" class="absolute top-3 right-3 text-slate-400 hover:text-white text-lg">✕</button>
 
-        <!-- Coupon Code Section -->
-        <div class="mt-4">
-          <label class="block text-xs font-medium text-slate-300 mb-1">Have a Coupon?</label>
+      <div id="checkout-body">
+        <h3 id="modal-title" class="text-base font-bold text-white">Ultimate Digital Guide</h3>
+        
+        <!-- Coupon Section -->
+        <div class="mt-3">
+          <label class="block text-[11px] text-slate-400 mb-1">Coupon Code (Optional)</label>
           <div class="flex gap-2">
-            <input type="text" id="coupon-input" placeholder="Try code: SAVE20" class="flex-1 uppercase bg-slate-950 border border-slate-700 px-3 py-2 rounded-lg text-xs text-white uppercase tracking-wider focus:outline-none focus:border-emerald-500">
-            <button onclick="applyCoupon()" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs px-3 py-2 rounded-lg font-semibold text-emerald-400">Apply</button>
+            <input type="text" id="coupon-box" placeholder="Code: SAVE20" class="flex-1 bg-slate-950 border border-slate-700 px-3 py-1.5 rounded-lg text-xs uppercase text-white outline-none">
+            <button id="apply-coupon-btn" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 px-3 py-1.5 rounded-lg text-xs font-semibold">Apply</button>
           </div>
-          <p id="coupon-msg" class="text-[11px] mt-1 hidden"></p>
+          <p id="coupon-alert" class="text-[10px] mt-1 hidden"></p>
         </div>
 
-        <!-- QR Code Section -->
-        <div class="mt-5 text-center bg-slate-950 p-4 rounded-xl border border-slate-800">
-          <p class="text-xs font-semibold text-slate-300">Scan using any UPI App</p>
-          <p class="text-[11px] text-slate-500">PhonePe / Google Pay / Paytm / BHIM</p>
-          <div class="bg-white p-2.5 rounded-xl inline-block mt-3 shadow-md">
-            <img id="modal-qr-image" src="" alt="UPI QR" class="w-40 h-40 object-contain mx-auto">
+        <!-- QR Box -->
+        <div class="mt-4 bg-slate-950 p-3 rounded-xl border border-slate-800 text-center">
+          <p class="text-xs text-slate-300 font-semibold">Scan & Pay <span id="modal-pay-amount" class="text-emerald-400">₹99</span></p>
+          <div class="bg-white p-2 rounded-lg inline-block mt-2">
+            <img id="qr-img" src="" alt="QR Code" class="w-36 h-36 mx-auto">
           </div>
-          <p class="text-[11px] text-slate-400 mt-2 font-mono">UPI ID: <span id="modal-upi-id" class="text-emerald-400 select-all font-semibold"></span></p>
+          <p class="text-[10px] text-slate-400 mt-2">UPI: <span id="display-upi-id" class="text-emerald-400 font-mono font-semibold"></span></p>
         </div>
 
-        <!-- UTR Entry -->
-        <div class="mt-4">
-          <label class="block text-xs font-medium text-slate-300 mb-1">Enter 12-Digit UTR / Transaction ID</label>
-          <input type="text" id="utr-input" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-slate-950 border border-slate-700 px-3 py-2.5 rounded-lg text-xs tracking-wider text-white focus:outline-none focus:border-emerald-500">
-          <p id="utr-error" class="text-rose-400 text-[11px] mt-1 hidden">Please enter a valid 12-digit numeric UTR.</p>
+        <!-- UTR Form -->
+        <div class="mt-3">
+          <label class="block text-[11px] text-slate-300 mb-1">Enter 12-Digit UTR Number</label>
+          <input type="text" id="utr-number" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-slate-950 border border-slate-700 px-3 py-2 rounded-lg text-xs text-white outline-none">
+          <p id="utr-error-msg" class="text-rose-400 text-[10px] mt-1 hidden">12 digit ka valid UTR number enter karein.</p>
         </div>
 
-        <button onclick="verifyPayment()" class="w-full mt-4 py-3 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] transition font-bold text-black rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20">
-          Verify & Unlock Download
+        <button id="confirm-payment-btn" class="w-full mt-3 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs transition">
+          Verify & Download
         </button>
       </div>
 
-      <!-- Download State -->
-      <div id="modal-success-flow" class="hidden text-center py-6">
-        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl font-bold">✓</div>
-        <h3 class="text-lg font-bold text-white">Payment Verified!</h3>
-        <p class="text-xs text-slate-400 mt-1 mb-5">Click below to download your digital file immediately.</p>
-        <a id="download-anchor" href="#" download class="inline-block w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-sm transition shadow-lg shadow-emerald-500/20">
-          📥 Download File
+      <!-- Download Button Once Verified -->
+      <div id="download-body" class="hidden text-center py-4">
+        <div class="text-emerald-400 text-3xl mb-1">✓</div>
+        <h4 class="text-base font-bold text-white">Payment Received!</h4>
+        <p class="text-xs text-slate-400 mt-1 mb-4">Aapki file download ke liye ready hai.</p>
+        <a id="final-download-btn" href="product.pdf" download class="block w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs transition">
+          Download File Now
         </a>
       </div>
     </div>
   </div>
 
-  <!-- Developer Panel Modal -->
+  <!-- Developer Modal -->
   <div id="admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl p-6 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">✕</button>
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-2xl p-5 relative">
+      <button id="close-admin" class="absolute top-3 right-3 text-slate-400 hover:text-white text-lg">✕</button>
 
-      <!-- PIN Lock Screen -->
-      <div id="admin-lock-screen">
-        <h3 class="text-lg font-bold text-white mb-2">Developer Panel</h3>
-        <p class="text-xs text-slate-400 mb-4">Enter developer security PIN to manage products and store settings.</p>
-        <input type="password" id="admin-pin-input" placeholder="Default PIN: 1234" class="w-full bg-slate-950 border border-slate-700 px-3 py-2 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500 mb-3">
-        <button onclick="unlockAdmin()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs transition">Unlock Panel</button>
+      <!-- Lock Screen -->
+      <div id="admin-lock">
+        <h3 class="text-base font-bold text-white mb-2">Developer Security</h3>
+        <p class="text-xs text-slate-400 mb-3">PIN enter kijiye (Default PIN: 1234):</p>
+        <input type="password" id="admin-pin" placeholder="Enter PIN" class="w-full bg-slate-950 border border-slate-700 px-3 py-2 rounded-lg text-xs text-white mb-3 outline-none">
+        <button id="admin-unlock-btn" class="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs">Unlock</button>
       </div>
 
-      <!-- Admin Controls -->
-      <div id="admin-dashboard" class="hidden">
-        <h3 class="text-lg font-bold text-white mb-1">Store Management</h3>
-        <p class="text-xs text-slate-400 mb-4">Add products or configure store UPI ID.</p>
-
-        <!-- UPI ID Setting -->
-        <div class="mb-5 p-3.5 bg-slate-950 border border-slate-800 rounded-xl">
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Primary Store UPI ID</label>
-          <div class="flex gap-2">
-            <input type="text" id="admin-upi-input" class="flex-1 bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white focus:outline-none">
-            <button onclick="saveUPI()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs px-3 py-1.5 rounded-lg">Save</button>
-          </div>
+      <!-- Settings Panel -->
+      <div id="admin-controls" class="hidden space-y-3">
+        <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2">Store Settings</h3>
+        
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">UPI ID</label>
+          <input type="text" id="setting-upi" class="w-full bg-slate-950 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
         </div>
 
-        <!-- Add New Product Form -->
-        <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-xl space-y-3">
-          <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider">Add New Product</h4>
-          <input type="text" id="new-title" placeholder="Product Title" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          <textarea id="new-desc" rows="2" placeholder="Short description" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white"></textarea>
-          <div class="grid grid-cols-2 gap-2">
-            <input type="number" id="new-price" placeholder="Selling Price (₹)" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-            <input type="number" id="new-original-price" placeholder="Original Price (₹)" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          </div>
-          <input type="text" id="new-image" placeholder="Image URL (Unsplash or direct image link)" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          <input type="text" id="new-file" placeholder="File download path (e.g. product.pdf or Drive link)" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          <button onclick="addProduct()" class="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs">Add Product to Store</button>
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">Product Title</label>
+          <input type="text" id="setting-title" class="w-full bg-slate-950 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
         </div>
 
-        <button onclick="resetDefaults()" class="w-full mt-4 py-2 border border-rose-500/30 text-rose-400 hover:bg-rose-500/10 rounded-lg text-xs transition">Reset To Default Products</button>
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">Price (₹)</label>
+          <input type="number" id="setting-price" class="w-full bg-slate-950 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
+        </div>
+
+        <div>
+          <label class="block text-[11px] text-slate-400 mb-1">Download Link / File URL</label>
+          <input type="text" id="setting-file" placeholder="product.pdf or Drive link" class="w-full bg-slate-950 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
+        </div>
+
+        <button id="save-settings-btn" class="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs mt-2">
+          Save Changes
+        </button>
       </div>
     </div>
   </div>
 
   <script>
-    // Initial Seed Data
-    const defaultProducts = [
-      {
-        id: "prod_1",
-        title: "Ultimate Digital Creator Bundle",
-        description: "Complete templates, aesthetic assets, and viral hooks for growth.",
-        price: 99,
-        originalPrice: 499,
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
-        fileUrl: "product.pdf"
-      }
-    ];
-
-    const coupons = {
-      "SAVE20": 20, // 20% off
-      "OFF50": 50,  // 50% off
-      "RISHAV": 30  // 30% off
+    // State - Pre-filled with your UPI ID
+    let storeData = {
+      upi: localStorage.getItem('rishav_store_upi') || '8240966365@fam',
+      title: localStorage.getItem('rishav_store_title') || 'Ultimate Digital Guide',
+      desc: localStorage.getItem('rishav_store_desc') || 'Complete digital bundle, templates aur growth guides. Payment karte hi file turant download ho jayegi.',
+      price: parseInt(localStorage.getItem('rishav_store_price')) || 99,
+      file: localStorage.getItem('rishav_store_file') || 'product.pdf'
     };
 
-    let products = JSON.parse(localStorage.getItem('rishav_products')) || defaultProducts;
-    let storeUpi = localStorage.getItem('rishav_upi') || "8240966365@fam";
-    let activeProduct = null;
-    let currentDiscount = 0;
+    let discountPercent = 0;
 
-    function renderProducts() {
-      const container = document.getElementById('products-grid');
-      container.innerHTML = products.map(p => `
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-slate-700 transition">
-          <div class="h-48 bg-slate-800 relative">
-            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover">
-            <span class="absolute top-3 right-3 bg-emerald-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Instant PDF</span>
-          </div>
-          <div class="p-5 flex-1 flex flex-col justify-between">
-            <div>
-              <h2 class="text-base font-bold text-white">${p.title}</h2>
-              <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">${p.description}</p>
-            </div>
-            <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-              <div>
-                <span class="text-lg font-extrabold text-emerald-400">₹${p.price}</span>
-                <span class="text-xs line-through text-slate-500 ml-1">₹${p.originalPrice}</span>
-              </div>
-              <button onclick="openCheckout('${p.id}')" class="px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-lg text-xs transition">
-                Buy Now
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
+    function refreshUI() {
+      document.getElementById('card-title').innerText = storeData.title;
+      document.getElementById('card-desc').innerText = storeData.desc;
+      document.getElementById('card-price').innerText = '₹' + storeData.price;
+      document.getElementById('setting-upi').value = storeData.upi;
+      document.getElementById('setting-title').value = storeData.title;
+      document.getElementById('setting-price').value = storeData.price;
+      document.getElementById('setting-file').value = storeData.file;
+      document.getElementById('final-download-btn').href = storeData.file;
     }
 
-    function openCheckout(productId) {
-      activeProduct = products.find(p => p.id === productId);
-      currentDiscount = 0;
-      document.getElementById('coupon-input').value = '';
-      document.getElementById('coupon-msg').classList.add('hidden');
-      document.getElementById('utr-input').value = '';
-      document.getElementById('utr-error').classList.add('hidden');
-      
-      document.getElementById('modal-checkout-flow').classList.remove('hidden');
-      document.getElementById('modal-success-flow').classList.add('hidden');
+    function updateQR() {
+      let finalAmt = Math.max(1, Math.round(storeData.price * (1 - discountPercent / 100)));
+      document.getElementById('modal-pay-amount').innerText = '₹' + finalAmt;
+      document.getElementById('display-upi-id').innerText = storeData.upi;
+      const upiUrl = 'upi://pay?pa=' + encodeURIComponent(storeData.upi) + '&pn=RishavStore&am=' + finalAmt + '&cu=INR';
+      document.getElementById('qr-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(upiUrl);
+    }
 
-      updateCheckoutPricing();
+    // Modal Triggers
+    document.getElementById('buy-now-btn').onclick = function() {
+      discountPercent = 0;
+      document.getElementById('coupon-box').value = '';
+      document.getElementById('coupon-alert').classList.add('hidden');
+      document.getElementById('utr-number').value = '';
+      document.getElementById('utr-error-msg').classList.add('hidden');
+      document.getElementById('checkout-body').classList.remove('hidden');
+      document.getElementById('download-body').classList.add('hidden');
+      document.getElementById('modal-title').innerText = storeData.title;
+      updateQR();
       document.getElementById('checkout-modal').classList.remove('hidden');
-    }
+    };
 
-    function updateCheckoutPricing() {
-      const finalPrice = Math.max(1, Math.round(activeProduct.price * (1 - currentDiscount / 100)));
-      document.getElementById('modal-product-title').innerText = activeProduct.title;
-      document.getElementById('modal-original-price').innerText = currentDiscount > 0 ? `₹${activeProduct.price}` : '';
-      document.getElementById('modal-final-price').innerText = `₹${finalPrice}`;
-      document.getElementById('modal-upi-id').innerText = storeUpi;
-
-      // Generate Dynamic QR with the exact final amount
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeUpi)}&pn=DigitalStore&am=${finalPrice}&cu=INR`;
-      document.getElementById('modal-qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiUrl)}`;
-    }
-
-    function applyCoupon() {
-      const code = document.getElementById('coupon-input').value.trim().toUpperCase();
-      const msg = document.getElementById('coupon-msg');
-      if (coupons[code]) {
-        currentDiscount = coupons[code];
-        msg.className = "text-[11px] mt-1 text-emerald-400";
-        msg.innerText = `Coupon Applied! ${currentDiscount}% Discount unlocked.`;
-        msg.classList.remove('hidden');
-        updateCheckoutPricing();
-      } else {
-        msg.className = "text-[11px] mt-1 text-rose-400";
-        msg.innerText = "Invalid coupon code.";
-        msg.classList.remove('hidden');
-      }
-    }
-
-    function verifyPayment() {
-      const utr = document.getElementById('utr-input').value.trim();
-      const error = document.getElementById('utr-error');
-      if (utr.length === 12 && /^\d+$/.test(utr)) {
-        error.classList.add('hidden');
-        document.getElementById('modal-checkout-flow').classList.add('hidden');
-        document.getElementById('modal-success-flow').classList.remove('hidden');
-        document.getElementById('download-anchor').href = activeProduct.fileUrl;
-      } else {
-        error.classList.remove('hidden');
-      }
-    }
-
-    function closeCheckoutModal() {
+    document.getElementById('close-checkout').onclick = function() {
       document.getElementById('checkout-modal').classList.add('hidden');
-    }
+    };
 
-    // Developer Panel Actions
-    function toggleAdminModal() {
-      const modal = document.getElementById('admin-modal');
-      modal.classList.toggle('hidden');
-      document.getElementById('admin-upi-input').value = storeUpi;
-    }
+    // Coupon logic
+    document.getElementById('apply-coupon-btn').onclick = function() {
+      const code = document.getElementById('coupon-box').value.trim().toUpperCase();
+      const alertBox = document.getElementById('coupon-alert');
+      const validCodes = { 'SAVE20': 20, 'OFF50': 50, 'RISHAV': 30 };
 
-    function unlockAdmin() {
-      const pin = document.getElementById('admin-pin-input').value;
-      if (pin === "1234") {
-        document.getElementById('admin-lock-screen').classList.add('hidden');
-        document.getElementById('admin-dashboard').classList.remove('hidden');
+      if (validCodes[code]) {
+        discountPercent = validCodes[code];
+        alertBox.innerText = 'Coupon applied: ' + discountPercent + '% Off!';
+        alertBox.className = 'text-[10px] mt-1 text-emerald-400';
+        alertBox.classList.remove('hidden');
+        updateQR();
       } else {
-        alert("Incorrect PIN. Default is 1234");
+        alertBox.innerText = 'Invalid coupon code';
+        alertBox.className = 'text-[10px] mt-1 text-rose-400';
+        alertBox.classList.remove('hidden');
       }
-    }
+    };
 
-    function saveUPI() {
-      const upi = document.getElementById('admin-upi-input').value.trim();
+    // UTR verification
+    document.getElementById('confirm-payment-btn').onclick = function() {
+      const utr = document.getElementById('utr-number').value.trim();
+      if (utr.length === 12 && /^\d+$/.test(utr)) {
+        document.getElementById('utr-error-msg').classList.add('hidden');
+        document.getElementById('checkout-body').classList.add('hidden');
+        document.getElementById('download-body').classList.remove('hidden');
+      } else {
+        document.getElementById('utr-error-msg').classList.remove('hidden');
+      }
+    };
 
-    
+    // Admin Modal Triggers
+    document.getElementById('admin-open-btn').onclick = function() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+    };
+    document.getElementById('close-admin').onclick = function() {
+      document.getElementById('admin-modal').classList.add('hidden');
+    };
+
+    document.getElementById('admin-unlock-btn').onclick = function() {
+      const pin = document.getElementById('admin-pin').value;
+      if (pin === '1234') {
+        document.getElementById('admin-lock').classList.add('hidden');
+        document.getElementById('admin-controls').classList.remove('hidden');
+      } else {
+        alert('Galat PIN! Default PIN 1234 hai.');
+      }
+    };
+
+    document.getElementById('save-settings-btn').onclick = function() {
+      storeData.upi = document.getElementById('setting-upi').value.trim() || storeData.upi;
+      storeData.title = document.getElementById('setting-title').value.trim() || storeData.title;
+      storeData.price = parseInt(document.getElementById('setting-price').value) || storeData.price;
+      storeData.file = document.getElementById('setting-file').value.trim() || storeData.file;
+
+      localStorage.setItem('rishav_store_upi', storeData.upi);
+      localStorage.setItem('rishav_store_title', storeData.title);
+      localStorage.setItem('rishav_store_price', storeData.price);
+      localStorage.setItem('rishav_store_file', storeData.file);
+
+      refreshUI();
+      alert('Settings Saved Successfully!');
+      document.getElementById('admin-modal').classList.add('hidden');
+    };
+
+    // First load
+    refreshUI();
+  </script>
+</body>
+</html>
