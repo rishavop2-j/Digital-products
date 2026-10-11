@@ -3,204 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital treasure • Digital Products & Courses</title>
+  <title>Digital Treasure • Premium Digital Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     .bg-royal-blue { background-color: #0b43d8; }
     .text-royal-blue { color: #0b43d8; }
-    .hero-curve {
-      background: linear-gradient(135deg, #0735b5 0%, #0b43d8 60%, #1653f3 100%);
-      border-bottom-right-radius: 40px;
-      border-bottom-left-radius: 40px;
+    .hero-bg {
+      background: linear-gradient(145deg, #062ca6 0%, #0b43d8 65%, #1858f9 100%);
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
     }
     .shadow-soft {
-      box-shadow: 0 10px 30px -5px rgba(11, 67, 216, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 25px -4px rgba(11, 67, 216, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
     }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
 
-  <!-- Top Blue Ribbon -->
-  <div class="bg-[#0735b5] text-white text-[11px] font-medium py-2 px-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <span>✦ Trusted digital products & expert resources</span>
-      <span class="hidden md:inline">✦ Instant UPI Downloads or Free Ad-Unlock</span>
-      <a href="#products-section" class="text-blue-200 hover:text-white font-semibold">Browse Library →</a>
+  <!-- Top Announcement Bar -->
+  <div class="bg-[#052690] text-blue-100 text-[11px] font-medium py-1.5 px-4 text-center">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <span>✦ Curated Digital Assets & Fast Unlocks</span>
+      <a href="#products-section" class="text-white hover:underline font-semibold">Store Library →</a>
     </div>
   </div>
 
-      <!-- Clean Logo & Brand Name (Digital Treasure) -->
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Logo -->
       <a href="#" class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-xl overflow-hidden border border-slate-200 shadow-sm flex items-center justify-center bg-blue-600">
-          <img src="logo.png" alt="Digital Treasure Logo" class="w-full h-full object-cover">
+        <div class="w-9 h-9 rounded-xl overflow-hidden border border-slate-200 shadow-sm flex items-center justify-center bg-royal-blue">
+          <img src="logo.png" alt="Logo" class="w-full h-full object-cover">
         </div>
         <div>
           <span class="text-xs font-black tracking-widest text-slate-900 block uppercase leading-none">Digital</span>
           <span class="text-[10px] font-bold text-royal-blue tracking-wider block uppercase leading-none mt-0.5">Treasure</span>
         </div>
       </a>
-  
-      
 
-      <nav class="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-600">
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-7 text-xs font-semibold text-slate-600">
         <a href="#" class="text-royal-blue font-bold">Home</a>
-        <a href="#products-section" class="hover:text-royal-blue transition">Courses & Products</a>
-        <a href="#categories-section" class="hover:text-royal-blue transition">Categories</a>
-        <a href="#support-section" class="hover:text-royal-blue transition">About</a>
-        <a href="#support-section" class="hover:text-royal-blue transition">Blog</a>
+        <a href="#products-section" class="hover:text-royal-blue transition">Products</a>
+        <a href="#support-section" class="hover:text-royal-blue transition">Support</a>
       </nav>
 
-      <a href="#products-section" class="bg-royal-blue hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition shadow-md">
-        Browse Library →
+      <!-- Compact CTA -->
+      <a href="#products-section" class="bg-royal-blue hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg transition shadow-sm">
+        Explore Store
       </a>
     </div>
   </header>
 
   <!-- Hero Section -->
-  <section class="hero-curve text-white pt-12 pb-16 px-4 shadow-xl">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+  <section class="hero-bg text-white pt-10 pb-14 px-4 shadow-lg">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
       <div class="lg:col-span-7 space-y-4 text-left">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium">
-          <span>✦ Premium Digital Products & Verified Courses</span>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[11px] font-medium text-blue-100">
+          <span>✦ Premium Assets & Resources</span>
         </div>
+        
         <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-          Digital Products &<br>Expert Services that<br><span class="text-[#bbfb45]">Grow Businesses</span>
+          Digital Products &<br>Resources that <span class="text-[#bbfb45]">Empower You</span>
         </h1>
-        <p class="text-blue-100 text-xs sm:text-sm max-w-xl leading-relaxed">
-          Unlock practical resources, courses, templates, and digital assets. Watch a quick ad to get it free, or skip all ads with instant UPI payment.
+        
+        <p class="text-blue-100 text-xs sm:text-sm max-w-lg leading-relaxed">
+          Curated packs, creative templates, and high-performance guides. Unlock direct ad-free downloads with instant UPI, or unlock selected free products via sponsors.
         </p>
-        <div class="flex flex-wrap gap-3 pt-2">
-          <a href="#products-section" class="bg-[#bbfb45] hover:bg-lime-400 text-slate-900 font-extrabold text-xs px-5 py-3 rounded-lg transition shadow-md">
-            Explore Courses <span>→</span>
+
+        <div class="flex flex-wrap gap-3 pt-1">
+          <a href="#products-section" class="bg-[#bbfb45] hover:bg-lime-400 text-slate-900 font-extrabold text-xs px-5 py-2.5 rounded-xl transition shadow">
+            Browse Products →
           </a>
-          <a href="#support-section" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs px-5 py-3 rounded-lg transition">
-            Learn More <span>▾</span>
+          <a href="#support-section" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition">
+            Contact Team
           </a>
         </div>
       </div>
 
       <div class="lg:col-span-5">
-        <div class="bg-white/10 border border-white/20 rounded-2xl p-4 shadow-2xl backdrop-blur-md">
-          <div class="bg-white rounded-xl p-4 text-slate-800 shadow-lg text-left">
-            <span class="text-[10px] font-bold text-royal-blue bg-blue-50 px-2 py-0.5 rounded uppercase">Dual Access Model</span>
-            <h3 class="text-base font-black text-slate-900 mt-2">Instant No-Ad or 100% Free Unlock</h3>
-            <p class="text-xs text-slate-500 mt-1">Pay direct via UPI for ad-free access, or unlock via link shortener ads.</p>
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span class="font-bold text-slate-900">⚡ 0-Wait Downloads</span>
-              <span class="font-extrabold text-royal-blue">Verified Links</span>
-            </div>
+        <div class="bg-white/10 border border-white/20 rounded-2xl p-4 backdrop-blur-md shadow-2xl">
+          <div class="bg-white rounded-xl p-4 text-slate-800 shadow text-left">
+            <span class="text-[10px] font-bold text-royal-blue bg-blue-50 px-2 py-0.5 rounded uppercase">Store Feature</span>
+            <h3 class="text-sm font-extrabold text-slate-900 mt-2">Instant UPI & Free Options Available</h3>
+            <p class="text-xs text-slate-500 mt-1">Get verified digital downloads automatically after quick payment or ad-unlock.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Products Section -->
-  <main id="products-section" class="max-w-7xl w-full mx-auto px-4 py-12 flex-1">
-    <div class="flex items-center justify-between mb-8 pb-3 border-b border-slate-200">
+  <!-- Marketplace Grid -->
+  <main id="products-section" class="max-w-6xl w-full mx-auto px-4 py-10 flex-1">
+    <div class="flex items-center justify-between mb-6 pb-2.5 border-b border-slate-200">
       <div>
-        <span class="text-[11px] font-bold text-royal-blue uppercase tracking-widest block">☆ Featured Listings</span>
-        <h2 class="text-xl md:text-2xl font-black text-slate-900 tracking-tight mt-0.5">Latest <span class="text-royal-blue">Courses & Products</span></h2>
+        <span class="text-[11px] font-bold text-royal-blue uppercase tracking-widest block">Available Vault</span>
+        <h2 class="text-xl font-black text-slate-900 tracking-tight mt-0.5">Featured Listings</h2>
       </div>
-      <span class="text-xs text-slate-500 font-semibold">● Dual Unlock Active</span>
+      <span class="text-xs text-slate-500 font-semibold">● Live Products</span>
     </div>
 
-    <!-- Product Grid -->
-    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
-  <!-- Support & Developers Section -->
-  <section id="support-section" class="max-w-4xl mx-auto px-4 py-10 my-4 border-t border-slate-200 w-full text-center">
-    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-      <h3 class="text-base font-extrabold text-slate-900">Need Support or Custom Enquiries?</h3>
-      <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Having issues with download or verification? Connect with our developer team directly.</p>
+  <!-- Support Section -->
+  <section id="support-section" class="max-w-3xl mx-auto px-4 py-8 mb-6 border-t border-slate-200 w-full text-center">
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+      <h3 class="text-sm font-extrabold text-slate-900">Need Help or Custom Assets?</h3>
+      <p class="text-xs text-slate-500 mt-1">Connect directly with our developers on Instagram.</p>
       
-      <div class="flex flex-wrap justify-center gap-3 mt-5">
-        <a href="https://instagram.com/rxsh.create" target="_blank" class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 transition">
-          <span class="text-royal-blue">👨‍💻</span>
-          <div class="text-left">
-            <p class="leading-none text-slate-900 font-bold">Rishav</p>
-            <span class="text-[10px] text-slate-500 font-normal">Developer • @rxsh.create</span>
-          </div>
+      <div class="flex flex-wrap justify-center gap-2.5 mt-4">
+        <a href="https://instagram.com/rxsh.create" target="_blank" class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3.5 py-1.5 rounded-xl text-xs text-slate-800 font-medium">
+          <span class="text-royal-blue">👨‍💻</span> Rishav • @rxsh.create
         </a>
-        <a href="https://instagram.com/its_darain_18" target="_blank" class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800 transition">
-          <span class="text-royal-blue">👨‍💻</span>
-          <div class="text-left">
-            <p class="leading-none text-slate-900 font-bold">Darain</p>
-            <span class="text-[10px] text-slate-500 font-normal">Developer • @its_darain_18</span>
-          </div>
+        <a href="https://instagram.com/its_darain_18" target="_blank" class="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3.5 py-1.5 rounded-xl text-xs text-slate-800 font-medium">
+          <span class="text-royal-blue">👨‍💻</span> Darain • @its_darain_18
         </a>
-        <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-xs font-semibold text-slate-800">
-          <span class="text-royal-blue">👨‍💻</span>
-          <div class="text-left">
-            <p class="leading-none text-slate-900 font-bold">Raiyan</p>
-            <span class="text-[10px] text-slate-500 font-normal">Developer Team</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 
-  <!-- Clean Footer (Triple Tap Secret Trigger) -->
-  <footer class="py-6 text-center text-xs text-slate-500 border-t border-slate-200 bg-white select-none">
-    <span id="secret-admin-trigger" class="cursor-pointer active:text-royal-blue transition font-semibold">© 2026 Publishing Profit Hub</span> • Built by Developers
+  <!-- Footer (Triple Tap Secret Trigger) -->
+  <footer class="py-5 text-center text-xs text-slate-500 border-t border-slate-200 bg-white select-none">
+    <span id="secret-admin-trigger" class="cursor-pointer active:text-royal-blue font-semibold">© 2026 Digital Treasure</span> • Built by Developers
   </footer>
 
-  <!-- Checkout & 5-Minute Timer Modal (Light Theme) -->
+  <!-- Checkout & UPI Timer Modal -->
   <div id="checkout-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl p-5 relative max-h-[92vh] overflow-y-auto shadow-2xl">
       <button onclick="closeCheckout()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-700 text-lg">✕</button>
       
       <div id="checkout-body">
-        <h3 id="modal-title" class="text-base font-black text-slate-900">Product Title</h3>
+        <h3 id="modal-title" class="text-sm font-black text-slate-900">Product Title</h3>
         
         <div class="mt-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-          <input type="text" id="coupon-box" placeholder="COUPON CODE" class="w-full bg-white border border-slate-300 px-3 py-2 rounded-lg text-xs uppercase text-center text-slate-800 outline-none focus:border-royal-blue tracking-wider">
-          <button onclick="applyCoupon()" class="w-full mt-2 py-2 bg-slate-100 hover:bg-slate-200 text-royal-blue border border-slate-200 rounded-lg text-xs font-bold transition">Apply Coupon</button>
-          <p id="coupon-alert" class="text-[10px] mt-1.5 text-center hidden font-semibold"></p>
+          <input type="text" id="coupon-box" placeholder="COUPON CODE" class="w-full bg-white border border-slate-300 px-3 py-1.5 rounded-lg text-xs uppercase text-center text-slate-800 outline-none focus:border-royal-blue tracking-wider">
+          <button onclick="applyCoupon()" class="w-full mt-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-royal-blue border border-slate-200 rounded-lg text-xs font-bold transition">Apply Coupon</button>
+          <p id="coupon-alert" class="text-[10px] mt-1 text-center hidden font-semibold"></p>
         </div>
 
-        <div class="mt-3.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-center relative">
+        <div class="mt-3 bg-slate-50 p-3 rounded-xl border border-slate-200 text-center relative">
           <div id="timer-box" class="flex items-center justify-center gap-1.5 text-xs text-amber-700 font-mono font-bold mb-2 bg-amber-50 py-1 px-2.5 rounded-lg border border-amber-200">
-            <span>⏱️ Session Expires in:</span>
+            <span>⏱️ Session Expires:</span>
             <span id="countdown-timer">05:00</span>
           </div>
 
           <div id="qr-active-view">
             <p class="text-xs text-slate-600 font-medium">Scan & Pay <span id="modal-pay-amount" class="text-royal-blue font-black text-base">₹0</span></p>
-            <div class="bg-white p-2.5 rounded-xl inline-block mt-2 shadow border border-slate-200">
+            <div class="bg-white p-2 rounded-xl inline-block mt-2 shadow border border-slate-200">
               <img id="qr-img" src="" alt="UPI QR" class="w-36 h-36 mx-auto object-contain">
             </div>
             <p class="text-[11px] text-slate-600 mt-2 font-mono">UPI: <span id="display-upi-id" class="text-royal-blue font-bold select-all"></span></p>
           </div>
 
-          <div id="qr-expired-view" class="hidden py-6">
-            <div class="text-rose-500 text-3xl mb-1 font-bold">⚠️</div>
-            <h4 class="text-rose-600 font-bold text-sm">Transaction Failed</h4>
-            <p class="text-[11px] text-slate-500 mt-1">QR validity has expired for this transaction.</p>
-            <button onclick="resetAndRegenerateQR()" class="mt-3 px-4 py-1.5 bg-royal-blue text-white rounded-lg text-xs font-bold">Generate New QR</button>
+          <div id="qr-expired-view" class="hidden py-4">
+            <h4 class="text-rose-600 font-bold text-xs">QR Expired</h4>
+            <button onclick="resetAndRegenerateQR()" class="mt-2 px-3 py-1 bg-royal-blue text-white rounded-lg text-xs font-bold">New QR</button>
           </div>
         </div>
 
-        <div class="mt-3.5" id="utr-section">
+        <div class="mt-3" id="utr-section">
           <label class="block text-[11px] font-bold text-slate-700 mb-1">Enter 12-Digit UTR Number</label>
-          <input type="text" id="utr-number" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-white border border-slate-300 px-3 py-2 rounded-lg text-xs text-slate-800 outline-none focus:border-royal-blue tracking-wider">
-          <p id="utr-error" class="text-rose-500 text-[10px] mt-1 hidden font-semibold">12-digit valid numeric UTR enter karein.</p>
+          <input type="text" id="utr-number" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-white border border-slate-300 px-3 py-1.5 rounded-lg text-xs text-slate-800 outline-none focus:border-royal-blue">
+          <p id="utr-error" class="text-rose-500 text-[10px] mt-1 hidden font-semibold">12-digit numeric UTR enter karein.</p>
         </div>
 
-        <button id="verify-btn" onclick="verifyPay()" class="w-full mt-3.5 py-3 bg-royal-blue hover:bg-blue-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow-md transition">
+        <button id="verify-btn" onclick="verifyPay()" class="w-full mt-3 py-2.5 bg-royal-blue hover:bg-blue-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow transition">
           Verify & Download Now
         </button>
       </div>
 
       <div id="download-body" class="hidden text-center py-6">
-        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl font-bold">✓</div>
-        <h4 class="text-base font-black text-slate-900">Payment Verified!</h4>
-        <p class="text-xs text-slate-500 mt-1 mb-5">Direct download without ads is unlocked.</p>
-        <a id="final-download-btn" href="#" target="_blank" class="block w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-md transition">
-          📥 Download File Now
+        <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 text-xl font-bold">✓</div>
+        <h4 class="text-sm font-black text-slate-900">Payment Verified!</h4>
+        <p class="text-xs text-slate-500 mt-1 mb-4">Direct download unlock ho gaya hai.</p>
+        <a id="final-download-btn" href="#" target="_blank" class="block w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow">
+          📥 Download File
         </a>
       </div>
     </div>
@@ -208,8 +189,8 @@
 
   <!-- Developer Main Panel Modal -->
   <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl p-6 relative min-h-[380px] max-h-[85vh] overflow-y-auto flex flex-col justify-start shadow-2xl">
-      <button onclick="closeAdmin()" class="absolute top-3.5 right-4 text-rose-500 hover:text-rose-600 font-bold text-xl leading-none z-10 transition">✕</button>
+    <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl p-5 relative min-h-[350px] max-h-[85vh] overflow-y-auto flex flex-col justify-start shadow-2xl">
+      <button onclick="closeAdmin()" class="absolute top-3.5 right-4 text-rose-500 hover:text-rose-600 font-bold text-lg leading-none z-10">✕</button>
       
       <div id="admin-lock" class="my-auto">
         <h3 class="text-sm font-bold text-slate-900 mb-2">Developer Security</h3>
@@ -219,14 +200,14 @@
 
       <div id="admin-controls" class="hidden space-y-4 pt-4">
         <div class="flex justify-between items-center border-b border-slate-200 pb-3 pr-6">
-          <h4 class="text-xs font-black text-slate-900 uppercase tracking-wider">Developer HQ</h4>
+          <h4 class="text-xs font-black text-slate-900 uppercase">Developer HQ</h4>
           <button onclick="openProductForm()" class="bg-royal-blue hover:bg-blue-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
             <span>➕</span> Add Product
           </button>
         </div>
         <div>
           <h5 class="text-[11px] font-semibold text-slate-500 mb-2.5">Manage Listed Products</h5>
-          <div id="admin-list" class="space-y-2.5"></div>
+          <div id="admin-list" class="space-y-2"></div>
         </div>
       </div>
     </div>
@@ -235,11 +216,11 @@
   <!-- Product Add/Edit Form Modal -->
   <div id="product-form-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl p-5 relative max-h-[92vh] overflow-y-auto space-y-2.5 shadow-2xl">
-      <button onclick="closeProductForm()" class="absolute top-2 right-3 text-rose-500 text-xl font-bold">✕</button>
+      <button onclick="closeProductForm()" class="absolute top-2 right-3 text-rose-500 text-lg font-bold">✕</button>
       <h4 id="form-heading" class="text-xs font-black text-royal-blue uppercase">Product Details</h4>
       
       <input type="hidden" id="edit-product-id">
-      <input type="text" id="a-title" placeholder="Product / Course Title" class="w-full bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
+      <input type="text" id="a-title" placeholder="Product Title" class="w-full bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
       <textarea id="a-desc" placeholder="Product Description" rows="2" class="w-full bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800"></textarea>
       
       <div>
@@ -249,21 +230,34 @@
       </div>
       
       <div class="grid grid-cols-2 gap-2">
-        <input type="number" id="a-price" placeholder="Instant Direct Price (₹)" class="bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
-        <input type="number" id="a-fakeprice" placeholder="Cut/Fake Price (₹)" class="bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
+        <input type="number" id="a-price" placeholder="Direct Price (₹)" class="bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
+        <input type="number" id="a-fakeprice" placeholder="Fake Price (₹)" class="bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
       </div>
 
       <input type="text" id="a-upi" value="8240966365@fam" placeholder="UPI ID" class="w-full bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
-
-      <!-- Links: Direct & Ad Shortener -->
-      <div class="space-y-1.5 bg-blue-50/50 p-2.5 rounded-lg border border-blue-100">
-        <label class="block text-[10px] font-bold text-royal-blue">Links Configuration</label>
-        <input type="text" id="a-link" placeholder="Direct Download Link (Drive/Mega/File)" class="w-full bg-white border border-slate-300 px-2 py-1 rounded text-xs text-slate-800">
-        <input type="text" id="a-ad-link" placeholder="Shortener Ad Link (GPlinks / ShrinkEarn)" class="w-full bg-white border border-slate-300 px-2 py-1 rounded text-xs text-slate-800">
-        <p class="text-[9px] text-slate-500">Ad link daalne par card me 'Watch Ad & Unlock' button appear hoga.</p>
-      </div>
       
-      <!-- 5 Coupons Grid -->
+      <!-- Direct Download Link -->
+      <div>
+        <label class="block text-[10px] font-bold text-slate-700 mb-0.5">Direct Download Link (No Ads)</label>
+        <input type="text" id="a-link" placeholder="Drive / Mega / File Download Link" class="w-full bg-slate-50 border border-slate-300 px-2.5 py-1.5 rounded text-xs text-slate-800">
+      </div>
+
+      <!-- FREE PRODUCT SHORTENER TOGGLE -->
+      <div class="bg-blue-50/70 p-2.5 rounded-xl border border-blue-200/80 space-y-2">
+        <label class="flex items-center gap-2 cursor-pointer select-none">
+          <input type="checkbox" id="a-has-free" onchange="toggleShortenerField()" class="w-4 h-4 accent-blue-600 rounded">
+          <span class="text-xs font-bold text-slate-900">Free via Ad-Shortener Option De?</span>
+        </label>
+
+        <!-- Hidden until toggle checked -->
+        <div id="shortener-box" class="hidden pt-1">
+          <label class="block text-[10px] font-semibold text-royal-blue mb-0.5">Shortener Ad Link (GPlinks, ShrinkEarn)</label>
+          <input type="text" id="a-ad-link" placeholder="Paste shortener link here" class="w-full bg-white border border-slate-300 px-2 py-1.5 rounded text-xs text-slate-800">
+          <p class="text-[9px] text-slate-500 mt-1">Check ON hone par hi customer ko free ad button show hoga.</p>
+        </div>
+      </div>
+
+      <!-- Coupons -->
       <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 space-y-1.5">
         <p class="text-[10px] font-bold text-royal-blue uppercase">Coupons (Up to 5)</p>
         <div class="grid grid-cols-2 gap-1.5">
@@ -282,7 +276,7 @@
 
       <div>
         <label class="block text-[10px] text-royal-blue font-bold mb-0.5">Product Privacy Code</label>
-        <input type="password" id="a-pass" placeholder="Privacy Code (to edit/delete)" class="w-full bg-slate-50 border border-blue-400 px-2.5 py-1.5 rounded text-xs text-slate-800">
+        <input type="password" id="a-pass" placeholder="Privacy Code (required to edit/delete)" class="w-full bg-slate-50 border border-blue-400 px-2.5 py-1.5 rounded text-xs text-slate-800">
       </div>
 
       <button onclick="saveProductData()" class="w-full py-2.5 bg-royal-blue hover:bg-blue-700 text-white font-bold rounded text-xs uppercase mt-2 shadow">Save Product</button>
@@ -293,17 +287,29 @@
     let masterPin = localStorage.getItem('r_pin') || '1234';
     let products = JSON.parse(localStorage.getItem('r_prods')) || [{
       id: 'p1', 
-      title: 'Complete Video Editing Masterclass & Assets Bundle', 
-      desc: 'All Premiere Pro & After Effects presets, SFX packs, fonts, and viral overlay templates.',
+      title: 'Ultimate Creator & Editor Master Bundle', 
+      desc: 'All Premiere Pro & After Effects presets, SFX, viral sound packs, and overlays.',
       img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
       price: 49, fakePrice: 499, upi: '8240966365@fam',
       coupons: [{ code: 'SAVE20', disc: 20 }],
       link: 'product.pdf', 
-      adLink: 'https://gplinks.co/', // Example shortener link
+      hasFree: true,
+      adLink: 'https://gplinks.co/',
       pass: '1234'
     }];
     let sel = null, disc = 0, tap = 0;
     let timerInterval = null, timeLeft = 300;
+
+    function toggleShortenerField() {
+      const isChecked = document.getElementById('a-has-free').checked;
+      const box = document.getElementById('shortener-box');
+      if (isChecked) {
+        box.classList.remove('hidden');
+      } else {
+        box.classList.add('hidden');
+        document.getElementById('a-ad-link').value = '';
+      }
+    }
 
     document.getElementById('a-file-img').addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -319,9 +325,9 @@
         const off = p.fakePrice > p.price ? Math.round(((p.fakePrice - p.price) / p.fakePrice) * 100) : 0;
         return `
           <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-soft flex flex-col justify-between hover:shadow-xl hover:border-blue-400 transition group">
-            <div class="h-52 bg-slate-100 relative overflow-hidden">
+            <div class="h-48 bg-slate-100 relative overflow-hidden">
               <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-              <span class="absolute top-3 left-3 bg-royal-blue text-white text-[10px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">Asset / Course</span>
+              <span class="absolute top-2.5 left-2.5 bg-royal-blue text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">Product Asset</span>
             </div>
             <div class="p-4 flex-1 flex flex-col justify-between">
               <div>
@@ -337,11 +343,11 @@
                 </div>
 
                 <button onclick="startCheckout('${p.id}')" class="w-full py-2.5 bg-royal-blue hover:bg-blue-700 text-white font-extrabold rounded-lg text-xs uppercase tracking-wider transition shadow-sm flex items-center justify-center gap-1">
-                  <span>⚡ Instant No-Ads (₹${p.price})</span>
+                  <span>⚡ Instant Download (₹${p.price})</span>
                 </button>
 
-                ${p.adLink ? `
-                  <a href="${p.adLink}" target="_blank" class="w-full py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 border border-amber-300 font-bold rounded-lg text-[11px] uppercase tracking-wider transition flex items-center justify-center gap-1">
+                ${(p.hasFree && p.adLink) ? `
+                  <a href="${p.adLink}" target="_blank" class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold rounded-lg text-[11px] uppercase tracking-wider transition flex items-center justify-center gap-1">
                     <span>🎁 Watch Ad & Unlock Free</span>
                   </a>
                 ` : ''}
@@ -471,8 +477,10 @@
         document.getElementById('a-fakeprice').value = p.fakePrice;
         document.getElementById('a-upi').value = p.upi;
         document.getElementById('a-link').value = p.link;
+        document.getElementById('a-has-free').checked = !!p.hasFree;
         document.getElementById('a-ad-link').value = p.adLink || '';
         document.getElementById('a-pass').value = p.pass;
+        toggleShortenerField();
         (p.coupons || []).forEach((c, idx) => {
           if (idx < 5) {
             document.getElementById(`c-code-${idx+1}`).value = c.code;
@@ -487,8 +495,10 @@
         document.getElementById('a-fakeprice').value = '';
         document.getElementById('a-upi').value = '8240966365@fam';
         document.getElementById('a-link').value = '';
+        document.getElementById('a-has-free').checked = false;
         document.getElementById('a-ad-link').value = '';
         document.getElementById('a-pass').value = '';
+        toggleShortenerField();
       }
       document.getElementById('product-form-modal').classList.remove('hidden');
     }
@@ -502,6 +512,8 @@
       let p = parseInt(document.getElementById('a-price').value);
       let pass = document.getElementById('a-pass').value.trim();
       let img = document.getElementById('a-img-base64').value || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';
+      let hasFree = document.getElementById('a-has-free').checked;
+      let adLink = document.getElementById('a-ad-link').value.trim();
 
       if (!t || !d || isNaN(p) || !pass) return alert('Title, Desc, Price aur Privacy Code bharna zaroori hai!');
 
@@ -518,7 +530,8 @@
         upi: document.getElementById('a-upi').value.trim() || '8240966365@fam',
         coupons: coupons,
         link: document.getElementById('a-link').value.trim() || 'product.pdf',
-        adLink: document.getElementById('a-ad-link').value.trim()
+        hasFree: hasFree,
+        adLink: hasFree ? adLink : ''
       };
 
       if (id) {
@@ -538,10 +551,10 @@
 
     function renderAdminList() {
       document.getElementById('admin-list').innerHTML = products.map(p => `
-        <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+        <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs">
           <div>
             <span class="font-bold text-slate-900">${p.title}</span>
-            <span class="block text-[10px] text-slate-500">₹${p.price} • Free Ad Link: ${p.adLink ? 'Active' : 'None'}</span>
+            <span class="block text-[10px] text-slate-500">₹${p.price} • Free Ad Mode: ${p.hasFree ? 'ON' : 'OFF'}</span>
           </div>
           <div class="flex gap-1.5">
             <button onclick="editProdProtected('${p.id}')" class="text-royal-blue bg-blue-100/60 px-2.5 py-1 rounded-lg text-[10px] font-bold">Edit ✏️</button>
