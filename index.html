@@ -1,453 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Store by Rishav</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Poppins', sans-serif; }
-  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between">
-
-  <!-- Header (Clean & Secret) -->
-  <header class="border-b border-slate-800 bg-slate-900/80 px-5 py-4 flex items-center justify-between sticky top-0 z-30 backdrop-blur-md">
-    <div class="flex items-center gap-2">
-      <span class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">Rishav Store</span>
-      <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono">Digital Hub</span>
-    </div>
-    <div class="text-xs text-slate-400 flex items-center gap-1.5">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Instant Delivery
-    </div>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
+  <header class="border-b border-slate-800 bg-slate-900/80 px-4 py-3 flex justify-between items-center sticky top-0 z-30 backdrop-blur-md">
+    <span class="text-lg font-bold text-emerald-400">Rishav Store</span>
+    <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full">Instant Delivery</span>
   </header>
 
-  <!-- Main Store -->
-  <main class="max-w-6xl w-full mx-auto px-4 py-8 flex-1">
-    <div class="text-center mb-8">
-      <h1 class="text-2xl md:text-3xl font-extrabold text-white">Instant Access Digital Downloads</h1>
-      <p class="text-xs md:text-sm text-slate-400 mt-1">Direct UPI payment se instant file access unlock kijiye.</p>
+  <main class="max-w-5xl w-full mx-auto px-4 py-6 flex-1">
+    <div class="text-center mb-6">
+      <h1 class="text-xl md:text-2xl font-bold text-white">Instant Access Downloads</h1>
+      <p class="text-xs text-slate-400 mt-1">UPI payment verify hote hi instant download unlock ho jayega.</p>
     </div>
-
-    <!-- Products Grid -->
-    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Populated via JS -->
-    </div>
+    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </main>
 
-  <!-- Footer (Secret Admin Trigger on Triple Tap) -->
-  <footer class="py-5 text-center text-xs text-slate-500 border-t border-slate-900 select-none">
-    <span id="secret-admin-trigger" class="cursor-pointer active:text-slate-300 transition">© 2026 Rishav Store</span> • Secure Digital Delivery
+  <footer class="py-4 text-center text-xs text-slate-600 border-t border-slate-900 select-none">
+    <span id="secret-admin-trigger" class="cursor-pointer">© 2026 Rishav Store</span> • Secure Store
   </footer>
 
   <!-- Checkout Modal -->
-  <div id="checkout-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-2xl p-5 relative max-h-[92vh] overflow-y-auto">
-      <button id="close-checkout" class="absolute top-3 right-3 text-slate-400 hover:text-white text-xl">✕</button>
-
+  <div id="checkout-modal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-xl p-4 relative max-h-[92vh] overflow-y-auto">
+      <button onclick="closeCheckout()" class="absolute top-2 right-3 text-slate-400 text-lg">✕</button>
       <div id="checkout-body">
-        <h3 id="modal-title" class="text-base font-bold text-white">Product Title</h3>
-        
-        <!-- Coupon Section (Proper Centered Layout) -->
-        <div class="mt-3.5 bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <label class="block text-[11px] font-semibold text-slate-300 mb-1.5 text-center">Have a Discount Coupon?</label>
-          <input type="text" id="coupon-box" placeholder="ENTER CODE" class="w-full bg-slate-900 border border-slate-700 px-3 py-2 rounded-lg text-xs uppercase text-center text-white outline-none focus:border-emerald-500 tracking-wider">
-          <button id="apply-coupon-btn" class="w-full mt-2 py-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 rounded-lg text-xs font-semibold transition active:scale-[0.98]">
-            Apply Coupon
-          </button>
-          <p id="coupon-alert" class="text-[11px] mt-1.5 text-center font-medium hidden"></p>
+        <h3 id="modal-title" class="text-sm font-bold text-white">Product Title</h3>
+        <div class="mt-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800 text-center">
+          <input type="text" id="coupon-box" placeholder="COUPON CODE" class="w-full bg-slate-900 border border-slate-700 px-2 py-1.5 rounded text-xs uppercase text-center text-white outline-none">
+          <button onclick="applyCoupon()" class="w-full mt-1.5 py-1.5 bg-slate-800 text-emerald-400 rounded text-xs font-semibold">Apply Coupon</button>
+          <p id="coupon-alert" class="text-[10px] mt-1 hidden"></p>
         </div>
-
-        <!-- Dynamic QR Box -->
-        <div class="mt-4 bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-center">
-          <p class="text-xs text-slate-300 font-semibold">Scan & Pay <span id="modal-pay-amount" class="text-emerald-400 text-base font-bold">₹0</span></p>
-          <p class="text-[10px] text-slate-500 mt-0.5">PhonePe / Google Pay / Paytm / Any UPI</p>
-          <div class="bg-white p-2.5 rounded-xl inline-block mt-2.5 shadow-md">
-            <img id="qr-img" src="" alt="QR Code" class="w-40 h-40 mx-auto object-contain">
+        <div class="mt-3 bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+          <p class="text-xs font-semibold">Pay <span id="modal-pay-amount" class="text-emerald-400 font-bold">₹0</span></p>
+          <div class="bg-white p-2 rounded-lg inline-block mt-2">
+            <img id="qr-img" src="" alt="QR" class="w-36 h-36 mx-auto">
           </div>
-          <p class="text-[11px] text-slate-400 mt-2 font-mono">UPI: <span id="display-upi-id" class="text-emerald-400 font-semibold select-all"></span></p>
+          <p class="text-[10px] text-slate-400 mt-1 font-mono">UPI: <span id="display-upi-id" class="text-emerald-400 font-semibold select-all"></span></p>
         </div>
-
-        <!-- UTR Form -->
-        <div class="mt-4">
-          <label class="block text-[11px] font-medium text-slate-300 mb-1">Enter 12-Digit UTR Number</label>
-          <input type="text" id="utr-number" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-slate-950 border border-slate-700 px-3 py-2.5 rounded-lg text-xs text-white outline-none focus:border-emerald-500 tracking-wider">
-          <p id="utr-error-msg" class="text-rose-400 text-[10px] mt-1 hidden">12-digit valid numeric UTR enter karein.</p>
+        <div class="mt-3">
+          <label class="block text-[10px] text-slate-300 mb-1">Enter 12-Digit UTR Number</label>
+          <input type="text" id="utr-number" maxlength="12" placeholder="e.g. 423456789012" class="w-full bg-slate-950 border border-slate-700 px-2 py-1.5 rounded text-xs text-white outline-none">
+          <p id="utr-error" class="text-rose-400 text-[10px] mt-0.5 hidden">Valid 12-digit UTR enter karein.</p>
         </div>
-
-        <button id="confirm-payment-btn" class="w-full mt-3 py-3 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-black font-bold rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-500/20">
-          Verify & Download
-        </button>
+        <button onclick="verifyPay()" class="w-full mt-3 py-2 bg-emerald-500 text-black font-bold rounded-lg text-xs uppercase">Verify & Download</button>
       </div>
-
-      <!-- Download State Once Verified -->
-      <div id="download-body" class="hidden text-center py-6">
-        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl font-bold">✓</div>
-        <h4 class="text-base font-bold text-white">Payment Received!</h4>
-        <p class="text-xs text-slate-400 mt-1 mb-5">Aapka access unlock ho gaya hai. Niche click karke download kijiye:</p>
-        <a id="final-download-btn" href="#" target="_blank" class="block w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-500/20">
-          📥 Download Product Now
-        </a>
+      <div id="download-body" class="hidden text-center py-4">
+        <div class="text-emerald-400 text-2xl mb-1">✓</div>
+        <h4 class="text-sm font-bold text-white">Payment Received!</h4>
+        <a id="final-download-btn" href="#" target="_blank" class="block w-full py-2 bg-emerald-500 text-black font-bold rounded-lg text-xs uppercase mt-3">Download Now</a>
       </div>
     </div>
   </div>
 
-  <!-- Developer Modal -->
-  <div id="admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl p-5 relative max-h-[92vh] overflow-y-auto">
-      <button id="close-admin" class="absolute top-3 right-3 text-slate-400 hover:text-white text-lg">✕</button>
-
-      <!-- Lock Screen -->
+  <!-- Developer Main Panel Modal -->
+  <div id="admin-modal" class="fixed inset-0 bg-black/85 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-xl p-4 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeAdmin()" class="absolute top-2 right-3 text-slate-400 text-lg">✕</button>
+      
+      <!-- PIN Lock -->
       <div id="admin-lock">
-        <h3 class="text-base font-bold text-white mb-1">Developer Access</h3>
-        <p class="text-xs text-slate-400 mb-3">Security PIN daaliye (Default: 1234):</p>
-        <input type="password" id="admin-pin" placeholder="Enter PIN" class="w-full bg-slate-950 border border-slate-700 px-3 py-2 rounded-lg text-xs text-white mb-3 outline-none">
-        <button id="admin-unlock-btn" class="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs">Unlock Panel</button>
+        <h3 class="text-sm font-bold text-white mb-2">Developer Security</h3>
+        <input type="password" id="admin-pin" placeholder="Default PIN: 1234" class="w-full bg-slate-950 border border-slate-700 px-2 py-1.5 rounded text-xs text-white mb-2 outline-none">
+        <button onclick="unlockAdmin()" class="w-full py-1.5 bg-emerald-500 text-black font-bold rounded text-xs">Unlock</button>
       </div>
 
-      <!-- Dashboard Controls -->
-      <div id="admin-controls" class="hidden space-y-5">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-          <h3 class="text-sm font-bold text-white">Developer Management</h3>
-          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">Unlocked</span>
+      <!-- Clean Dashboard -->
+      <div id="admin-controls" class="hidden space-y-3">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+          <h4 class="text-xs font-bold text-white">Developer HQ</h4>
+          <button onclick="openProductForm()" class="bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-2.5 py-1 rounded text-xs">➕ Add Product</button>
         </div>
 
-        <!-- Section 1: Add New Product Form (All 10 Fields) -->
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-          <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider">➕ Add New Digital Product</h4>
-          
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-0.5">1. Product Title *</label>
-            <input type="text" id="add-title" placeholder="e.g. 500+ Viral Video Hooks" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          </div>
-
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-0.5">2. Product Description *</label>
-            <textarea id="add-desc" rows="2" placeholder="Short description of benefits" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white"></textarea>
-          </div>
-
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-0.5">3. Product Image URL *</label>
-            <input type="text" id="add-image" placeholder="https://..." class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[10px] text-slate-400 mb-0.5">4. Selling Price (₹) *</label>
-              <input type="number" id="add-price" placeholder="49" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-            </div>
-            <div>
-              <label class="block text-[10px] text-slate-400 mb-0.5">5. Fake/Cut Price (₹) *</label>
-              <input type="number" id="add-fake-price" placeholder="199" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-0.5">6. UPI ID for Receiving Money *</label>
-            <input type="text" id="add-upi" value="8240966365@fam" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[10px] text-slate-400 mb-0.5">7. Coupon Code (Optional)</label>
-              <input type="text" id="add-coupon" placeholder="e.g. SAVE50" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs uppercase text-white">
-            </div>
-            <div>
-              <label class="block text-[10px] text-slate-400 mb-0.5">Coupon Discount (%)</label>
-              <input type="number" id="add-discount" placeholder="e.g. 50" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-[10px] text-slate-400 mb-0.5">8. Product Download Link / Drive Link *</label>
-            <input type="text" id="add-link" placeholder="product.pdf ya Google Drive link" class="w-full bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-          </div>
-
-          <div>
-            <label class="block text-[10px] text-emerald-400 font-semibold mb-0.5">9. Product Access Password (Secret to edit/delete) *</label>
-            <input type="password" id="add-password" placeholder="Set a password for this product" class="w-full bg-slate-900 border border-emerald-500/40 px-3 py-1.5 rounded-lg text-xs text-white">
-          </div>
-
-          <button id="add-product-btn" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg text-xs mt-2 uppercase tracking-wider transition">
-            10. Add Product to Store
-          </button>
-        </div>
-
-        <!-- Section 2: Manage Existing Listed Products -->
-        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
-          <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">📋 Existing Products (Protected)</h4>
-          <div id="admin-products-list" class="space-y-2">
-            <!-- Populated via JS -->
-          </div>
-        </div>
-
-        <!-- Change Master Panel PIN -->
-        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
-          <label class="block text-[10px] text-slate-400 mb-1">Change Master Developer PIN</label>
-          <div class="flex gap-2">
-            <input type="password" id="new-master-pin" placeholder="Enter new PIN" class="flex-1 bg-slate-900 border border-slate-700 px-3 py-1.5 rounded-lg text-xs text-white">
-            <button id="save-master-pin-btn" class="bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs px-3 py-1.5 rounded-lg font-semibold">Change PIN</button>
-          </div>
+        <div>
+          <h5 class="text-[11px] font-semibold text-slate-400 mb-2">Manage Listed Products</h5>
+          <div id="admin-list" class="space-y-2"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Product Add/Edit Form Modal -->
+  <div id="product-form-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-sm rounded-xl p-4 relative max-h-[92vh] overflow-y-auto space-y-2.5">
+      <button onclick="closeProductForm()" class="absolute top-2 right-3 text-slate-400 text-lg">✕</button>
+      <h4 id="form-heading" class="text-xs font-bold text-emerald-400 uppercase">Product Details</h4>
+      
+      <input type="hidden" id="edit-product-id">
+      
+      <input type="text" id="a-title" placeholder="Product Title" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      <textarea id="a-desc" placeholder="Product Description" rows="2" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white"></textarea>
+      <input type="text" id="a-img" placeholder="Image URL (Unsplash or image link)" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      
+      <div class="grid grid-cols-2 gap-2">
+        <input type="number" id="a-price" placeholder="Selling Price (₹)" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+        <input type="number" id="a-fakeprice" placeholder="Fake/Cut Price (₹)" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      </div>
+
+      <input type="text" id="a-upi" value="8240966365@fam" placeholder="UPI ID" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      
+      <div class="grid grid-cols-2 gap-2">
+        <input type="text" id="a-coupon" placeholder="Coupon Code" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs uppercase text-white">
+        <input type="number" id="a-discount" placeholder="Discount %" class="bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      </div>
+
+      <input type="text" id="a-link" placeholder="Download Link (product.pdf or Drive link)" class="w-full bg-slate-950 border border-slate-700 px-2 py-1 rounded text-xs text-white">
+      
+      <div class="pt-1">
+        <label class="block text-[10px] text-emerald-400 font-semibold mb-0.5">Product Privacy Code (Secret Access Key)</label>
+        <input type="password" id="a-pass" placeholder="Privacy Code (required to edit/delete)" class="w-full bg-slate-950 border border-emerald-500/50 px-2 py-1 rounded text-xs text-white">
+      </div>
+
+      <button onclick="saveProductData()" class="w-full py-2 bg-emerald-500 text-black font-bold rounded text-xs uppercase mt-2">Save Product</button>
     </div>
   </div>
 
   <script>
-    // Master Password & Products Store
-    let masterPin = localStorage.getItem('rishav_master_pin') || '1234';
+    let masterPin = localStorage.getItem('r_pin') || '1234';
+    let products = JSON.parse(localStorage.getItem('r_prods')) || [{
+      id: 'p1', title: 'Ultimate Digital Guide', desc: 'Complete bundle and presets.',
+      img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+      price: 99, fakePrice: 499, upi: '8240966365@fam', coupon: 'SAVE20', discount: 20,
+      link: 'product.pdf', pass: '1234'
+    }];
+    let sel = null, disc = 0, tap = 0;
 
-    const defaultInitialProduct = [
-      {
-        id: "prod_default_1",
-        title: "Ultimate Digital Creator Bundle",
-        desc: "Complete templates, aesthetic assets, and viral hooks for growth.",
-        img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
-        price: 99,
-        fakePrice: 499,
-        upi: "8240966365@fam",
-        coupon: "SAVE20",
-        discountPercent: 20,
-        fileLink: "product.pdf",
-        password: "admin"
-      }
-    ];
-
-    let storeProducts = JSON.parse(localStorage.getItem('rishav_store_products')) || defaultInitialProduct;
-    let selectedProduct = null;
-    let currentDiscount = 0;
-
-    function saveProducts() {
-      localStorage.setItem('rishav_store_products', JSON.stringify(storeProducts));
-    }
-
-    // Render Store Front
-    function renderStore() {
-      const container = document.getElementById('products-grid');
-      if (storeProducts.length === 0) {
-        container.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 text-xs">No products listed yet. Open Developer panel to add.</div>`;
-        return;
-      }
-
-      container.innerHTML = storeProducts.map(p => {
-        const off = p.fakePrice > p.price ? Math.round(((p.fakePrice - p.price) / p.fakePrice) * 100) : 0;
-        return `
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-slate-700 transition">
-            <div class="h-48 bg-slate-800 relative">
-              <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover">
-              <span class="absolute top-3 right-3 bg-emerald-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Instant Download</span>
-            </div>
-            <div class="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h2 class="text-base font-bold text-white">${p.title}</h2>
-                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">${p.desc}</p>
-              </div>
-              <div class="mt-4 pt-4 border-t border-slate-800">
-                <div class="flex items-baseline gap-2 mb-3">
-                  <span class="text-2xl font-extrabold text-emerald-400">₹${p.price}</span>
-                  ${p.fakePrice ? `<span class="text-xs text-slate-500 line-through">₹${p.fakePrice}</span>` : ''}
-                  ${off > 0 ? `<span class="text-[10px] text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded font-semibold">${off}% OFF</span>` : ''}
-                </div>
-                <button onclick="openCheckout('${p.id}')" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-black font-bold rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-emerald-500/20">
-                  Buy Now via UPI
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // Checkout Modal Flow
-    function openCheckout(productId) {
-      selectedProduct = storeProducts.find(p => p.id === productId);
-      currentDiscount = 0;
-      document.getElementById('coupon-box').value = '';
-      document.getElementById('coupon-alert').classList.add('hidden');
-      document.getElementById('utr-number').value = '';
-      document.getElementById('utr-error-msg').classList.add('hidden');
-      document.getElementById('checkout-body').classList.remove('hidden');
-      document.getElementById('download-body').classList.add('hidden');
-      document.getElementById('modal-title').innerText = selectedProduct.title;
-      updateCheckoutQR();
-      document.getElementById('checkout-modal').classList.remove('hidden');
-    }
-
-    function updateCheckoutQR() {
-      let finalAmt = Math.max(1, Math.round(selectedProduct.price * (1 - currentDiscount / 100)));
-      document.getElementById('modal-pay-amount').innerText = '₹' + finalAmt;
-      document.getElementById('display-upi-id').innerText = selectedProduct.upi;
-      const upiUrl = `upi://pay?pa=${encodeURIComponent(selectedProduct.upi)}&pn=DigitalStore&am=${finalAmt}&cu=INR`;
-      document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiUrl)}`;
-    }
-
-    // Coupon logic
-    document.getElementById('apply-coupon-btn').onclick = function() {
-      const code = document.getElementById('coupon-box').value.trim().toUpperCase();
-      const alertBox = document.getElementById('coupon-alert');
-
-      if (selectedProduct.coupon && code === selectedProduct.coupon.toUpperCase()) {
-        currentDiscount = selectedProduct.discountPercent || 10;
-        alertBox.innerText = `✓ ${currentDiscount}% Discount Applied with ${code}!`;
-        alertBox.className = 'text-[11px] mt-1.5 text-center font-medium text-emerald-400';
-        alertBox.classList.remove('hidden');
-        updateCheckoutQR();
-      } else {
-        alertBox.innerText = '✕ Invalid Coupon Code for this product';
-        alertBox.className = 'text-[11px] mt-1.5 text-center font-medium text-rose-400';
-        alertBox.classList.remove('hidden');
-      }
-    };
-
-    // UTR Verification
-    document.getElementById('confirm-payment-btn').onclick = function() {
-      const utr = document.getElementById('utr-number').value.trim();
-      if (utr.length === 12 && /^\d+$/.test(utr)) {
-        document.getElementById('utr-error-msg').classList.add('hidden');
-        document.getElementById('checkout-body').classList.add('hidden');
-        document.getElementById('download-body').classList.remove('hidden');
-        document.getElementById('final-download-btn').href = selectedProduct.fileLink;
-      } else {
-        document.getElementById('utr-error-msg').classList.remove('hidden');
-      }
-    };
-
-    document.getElementById('close-checkout').onclick = function() {
-      document.getElementById('checkout-modal').classList.add('hidden');
-    };
-
-    // Admin Panel (Triple click trigger)
-    let clickCount = 0;
-    let clickTimer = null;
-    document.getElementById('secret-admin-trigger').onclick = function() {
-      clickCount++;
-      clearTimeout(clickTimer);
-      if (clickCount >= 3) {
-        clickCount = 0;
-        document.getElementById('admin-pin').value = '';
-        document.getElementById('admin-lock').classList.remove('hidden');
-        document.getElementById('admin-controls').classList.add('hidden');
-        document.getElementById('admin-modal').classList.remove('hidden');
-      } else {
-        clickTimer = setTimeout(() => { clickCount = 0; }, 600);
-      }
-    };
-
-    document.getElementById('close-admin').onclick = function() {
-      document.getElementById('admin-modal').classList.add('hidden');
-    };
-
-    document.getElementById('admin-unlock-btn').onclick = function() {
-      const pin = document.getElementById('admin-pin').value;
-      if (pin === masterPin) {
-        document.getElementById('admin-lock').classList.add('hidden');
-        document.getElementById('admin-controls').classList.remove('hidden');
-        renderAdminList();
-      } else {
-        alert('Galat Master PIN!');
-      }
-    };
-
-    // Add Product with All 10 Fields
-    document.getElementById('add-product-btn').onclick = function() {
-      const title = document.getElementById('add-title').value.trim();
-      const desc = document.getElementById('add-desc').value.trim();
-      const img = document.getElementById('add-image').value.trim() || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80';
-      const price = parseInt(document.getElementById('add-price').value);
-      const fakePrice = parseInt(document.getElementById('add-fake-price').value) || price * 2;
-      const upi = document.getElementById('add-upi').value.trim() || '8240966365@fam';
-      const coupon = document.getElementById('add-coupon').value.trim().toUpperCase();
-      const discountPercent = parseInt(document.getElementById('add-discount').value) || 0;
-      const fileLink = document.getElementById('add-link').value.trim() || 'product.pdf';
-      const password = document.getElementById('add-password').value.trim();
-
-      if (!title || !desc || !price || !password) {
-        alert('Kripya Title, Description, Price aur Access Password zaroor bharein!');
-        return;
-      }
-
-      const newProduct = {
-        id: 'prod_' + Date.now(),
-        title,
-        desc,
-        img,
-        price,
-        fakePrice,
-        upi,
-        coupon,
-        discountPercent,
-        fileLink,
-        password
-      };
-
-      storeProducts.push(newProduct);
-      saveProducts();
-      renderStore();
-      renderAdminList();
-
-      document.getElementById('add-title').value = '';
-      document.getElementById('add-desc').value = '';
-      document.getElementById('add-image').value = '';
-      document.getElementById('add-price').value = '';
-      document.getElementById('add-fake-price').value = '';
-      document.getElementById('add-coupon').value = '';
-      document.getElementById('add-discount').value = '';
-      document.getElementById('add-link').value = '';
-      document.getElementById('add-password').value = '';
-
-      alert('Product successfully add ho gaya!');
-    };
-
-    function renderAdminList() {
-      const list = document.getElementById('admin-products-list');
-      if (storeProducts.length === 0) {
-        list.innerHTML = `<p class="text-xs text-slate-500">Koi product available nahi hai.</p>`;
-        return;
-      }
-
-      list.innerHTML = storeProducts.map(p => `
-        <div class="flex items-center justify-between p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
+    function render() {
+      document.getElementById('products-grid').innerHTML = products.map(p => `
+        <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-lg p-4 flex flex-col justify-between">
           <div>
-            <p class="text-xs font-bold text-white">${p.title}</p>
-            <p class="text-[10px] text-slate-400">Price: ₹${p.price} | Coupon: ${p.coupon || 'None'}</p>
+            <img src="${p.img}" class="w-full h-40 object-cover rounded-lg mb-3">
+            <h3 class="font-bold text-white text-sm">${p.title}</h3>
+            <p class="text-xs text-slate-400 mt-1">${p.desc}</p>
           </div>
-          <button onclick="deleteProductProtected('${p.id}')" class="px-2.5 py-1 bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 rounded text-[10px] font-semibold transition">
-            Delete 🗑️
-          </button>
+          <div class="mt-3 pt-3 border-t border-slate-800 flex justify-between items-center">
+            <div>
+              <span class="text-lg font-bold text-emerald-400">₹${p.price}</span>
+              <span class="text-xs line-through text-slate-500 ml-1">₹${p.fakePrice}</span>
+            </div>
+            <button onclick="startCheckout('${p.id}')" class="px-3 py-1.5 bg-emerald-500 text-black font-bold rounded text-xs">Buy Now</button>
+          </div>
         </div>
       `).join('');
     }
 
-    function deleteProductProtected(productId) {
-      const prod = storeProducts.find(p => p.id === productId);
-      if (!prod) return;
+    function startCheckout(id) {
+      sel = products.find(p => p.id === id); disc = 0;
+      document.getElementById('coupon-box').value = '';
+      document.getElementById('coupon-alert').classList.add('hidden');
+      document.getElementById('utr-number').value = '';
+      document.getElementById('utr-error').classList.add('hidden');
+      document.getElementById('checkout-body').classList.remove('hidden');
+      document.getElementById('download-body').classList.add('hidden');
+      document.getElementById('modal-title').innerText = sel.title;
+      updateQR();
+      document.getElementById('checkout-modal').classList.remove('hidden');
+    }
 
-      const enteredPass = prompt(`"${prod.title}" ko delete karne ke liye iska Access Password enter kijiye:`);
-      if (enteredPass === null) return;
+    function updateQR() {
+      let f = Math.max(1, Math.round(sel.price * (1 - disc / 100)));
+      document.getElementById('modal-pay-amount').innerText = '₹' + f;
+      document.getElementById('display-upi-id').innerText = sel.upi;
+      document.getElementById('qr-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(`upi://pay?pa=${sel.upi}&pn=Store&am=${f}&cu=INR`);
+    }
 
-      if (enteredPass === prod.password) {
-        storeProducts = storeProducts.filter(p => p.id !== productId);
-        saveProducts();
-        renderStore();
-        renderAdminList();
-        alert('Product deleted successfully!');
+    function applyCoupon() {
+      let c = document.getElementById('coupon-box').value.trim().toUpperCase();
+      let a = document.getElementById('coupon-alert');
+      if (sel.coupon && c === sel.coupon.toUpperCase()) {
+        disc = sel.discount || 10;
+        a.innerText = '✓ ' + disc + '% Off Applied!';
+        a.className = 'text-[10px] mt-1 text-emerald-400 block';
+        updateQR();
       } else {
-        alert('Galat Product Password! Action blocked.');
+        a.innerText = '✕ Invalid Coupon';
+        a.className = 'text-[10px] mt-1 text-rose-400 block';
       }
     }
 
-    document.getElementById('save-master-pin-btn').onclick = function() {
-      const newPin = document.getElementById('new-master-pin').value.trim();
-      if (newPin) {
-        masterPin = newPin;
-        localStorage.setItem('rishav_master_pin', newPin);
-        alert('Master Developer PIN change ho gaya!');
-        document.getElementById('new-master-pin').value = '';
+    function verifyPay() {
+      let u = document.getElementById('utr-number').value.trim();
+      if (u.length === 12 && /^\d+$/.test(u)) {
+        document.getElementById('utr-error').classList.add('hidden');
+        document.getElementById('checkout-body').classList.add('hidden');
+        document.getElementById('download-body').classList.remove('hidden');
+        document.getElementById('final-download-btn').href = sel.link;
+      } else {
+        document.getElementById('utr-error').classList.remove('hidden');
       }
+    }
+
+    function closeCheckout() { document.getElementById('checkout-modal').classList.add('hidden'); }
+    function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+    // Triple tap trigger
+    document.getElementById('secret-admin-trigger').onclick = function() {
+      tap++;
+      if (tap >= 3) {
+        tap = 0;
+        document.getElementById('admin-lock').classList.remove('hidden');
+        document.getElementById('admin-controls').classList.add('hidden');
+        document.getElementById('admin-modal').classList.remove('hidden');
+      }
+      setTimeout(() => tap = 0, 800);
     };
 
-    renderStore();
+    function unlockAdmin() {
+      if (document.getElementById('admin-pin').value === masterPin) {
+        document.getElementById('admin-lock').classList.add('hidden');
+        document.getElementById('admin-controls').classList.remove('hidden');
+        renderAdminList();
+      } else alert('Wrong PIN!');
+    }
+
+    // Modal Form controls
+    function openProductForm(id = null) {
+      document.getElementById('edit-product-id').value = id || '';
+      document.getElementById('form-heading').innerText = id ? 'Edit Product' : 'Add New Product';
+
+      if (id) {
+        let p = products.find(x => x.id === id);
+        document.getElementById('a-title').value = p.title;
+        document.getElementById('a-desc').value = p.desc;
+        document.getElementById('a-img').value = p.img;
+        document.getElementById('a-price').value = p.price;
+        document.getElementById('a-fakeprice').value = p.fakePrice;
+        document.getElementById('a-upi').value = p.upi;
+        document.getElementById('a-coupon').value = p.coupon;
+        document.getElementById('a-discount').value = p.discount;
+        document.getElementById('a-link').value = p.link;
+        document.getElementById('a-pass').value = p.pass;
+      } else {
+        document.getElementById('a-title').value = '';
+        document.getElementById('a-desc').value = '';
+        document.getElementById('a-img').value = '';
+        document.getElementById('a-price').value = '';
+        document.getElementById('a-fakeprice').value = '';
+        document.getElementById('a-upi').value = '8240966365@fam';
+        document.getElementById('a-coupon').value = '';
+        document.getElementById('a-discount').value = '';
+        document.getElementById('a-link').value = '';
+        document.getElementById('a-pass').value = '';
+      }
+      document.getElementById('product-form-modal').classList.remove('hidden');
+    }
+
+    function closeProductForm() {
+      document.getElementById('product-form-modal').classList.add('hidden');
+    }
+
+    function saveProductData() {
+      let id = document.getElementById('edit-product-id').value;
+      let t = document.getElementById('a-title').value.trim();
+      let d = document.getElementById('a-desc').value.trim();
+      let p = parseInt(document.getElementById('a-price').value);
+      let pass = document.getElementById('a-pass').value.trim();
+
+      if (!t || !d || !p || !pass) return alert('Title, Desc, Price aur Privacy Code bharna zaroori hai!');
+
+      let data = {
+        title: t, desc: d, price: p, pass: pass,
+        fakePrice: parseInt(document.getElementById('a-fakeprice').value) || p * 2,
+        img: document.getElementById('a-img').value.trim() || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80',
+        upi: document.getElementById('a-upi').value.trim() || '8240966365@fam',
+        coupon: document.getElementById('a-coupon').value.trim().toUpperCase(),
+        discount: parseInt(document.getElementById('a-discount').value) || 0,
+        link: document.getElementById('a-link').value.trim() || 'product.pdf'
+      };
+
+      if (id) {
+        let index = products.findIndex(x => x.id === id);
+        data.id = id;
+        products[index] = data;
+        alert('Product update ho gaya!');
+      } else {
+        data.id = 'p_' + Date.now();
+        products.push(data);
+        alert('Naya product add ho gaya!');
+      }
+
+      localStorage.setItem('r_prods', JSON.stringify(products));
+      render();
+      renderAdminList();
+      closeProductForm();
+    }
+
+    function renderAdminList() {
+      document.getElementById('admin-list').innerHTML = products.map(p => `
+        <div class="flex justify-between items-center bg-slate-950 p-2.5 rounded border border-slate-800 text-xs">
+          <div>
+            <span class="font-bold text-white">${p.title}</span>
+            <span class="block text-[10px] text-slate-400">₹${p.price} • Coupon: ${p.coupon || 'None'}</span>
+          </div>
+          <div class="flex gap-1.5">
+            <button onclick="editProdProtected('${p.id}')" class="text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded text-[10px] font-semibold">Edit ✏️</button>
+            <button onclick="delProdProtected('${p.id}')" class="text-rose-400 bg-rose-500/10 px-2 py-1 rounded text-[10px] font-semibold">Delete 🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Protected Edit
+    function editProdProtected(id) {
+      let p = products.find(x => x.id === id);
+      let inputPass = prompt(`"${p.title}" ko edit karne ke liye Privacy Code daliye:`);
+      if (inputPass === p.pass) {
+        openProductForm(id);
+      } else if (inputPass !== null) {
+        alert('Galat Privacy Code! Edit allow nahi hai.');
+      }
+    }
+
+    // Protected Delete
+    function delProdProtected(id) {
+      let p = products.find(x => x.id === id);
+      let inputPass = prompt(`"${p.title}" ko delete karne ke liye Privacy Code daliye:`);
+      if (inputPass === p.pass) {
+        products = products.filter(x => x.id !== id);
+        localStorage.setItem('r_prods', JSON.stringify(products));
+        render();
+        renderAdminList();
+        alert('Product delete ho gaya!');
+      } else if (inputPass !== null) {
+        alert('Galat Privacy Code!');
+      }
+    }
+
+    render();
   </script>
 </body>
 </html>
