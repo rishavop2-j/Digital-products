@@ -2,1042 +2,383 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>My Soda Shop 3D - By Rishav Kumar Vishwakarma</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>My Soda Shop 3D - Rishav Kumar Vishwakarma</title>
 <style>
-  * { box-sizing: border-box; user-select: none; -webkit-user-select: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-  body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #1a1a2e; }
-  #gameCanvas { width: 100%; height: 100%; display: block; }
-
-  /* Top HUD */
-  #hud {
-    position: absolute; top: 10px; left: 10px; right: 10px;
-    display: flex; justify-content: space-between; align-items: flex-start;
-    pointer-events: none; z-index: 10; flex-wrap: wrap; gap: 8px;
-  }
-  .hud-card {
-    background: rgba(15, 23, 42, 0.85); color: #fff; padding: 8px 14px;
-    border-radius: 12px; border: 2px solid rgba(255,255,255,0.15);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4); pointer-events: auto;
-    display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px;
-  }
-  .brand-banner {
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
-    padding: 6px 14px; border-radius: 12px; color: #fff; text-align: center;
-    box-shadow: 0 4px 15px rgba(255,65,108,0.4);
-  }
-  .brand-banner h1 { margin: 0; font-size: 16px; letter-spacing: 0.5px; text-transform: uppercase; }
-  .brand-banner p { margin: 0; font-size: 10px; opacity: 0.9; font-weight: 600; }
-
-  /* Right Action Menu */
-  #sideMenu {
-    position: absolute; right: 12px; top: 80px;
-    display: flex; flex-direction: column; gap: 10px; z-index: 10;
-  }
-  .action-btn {
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white; border: 2px solid rgba(255,255,255,0.25);
-    padding: 10px 14px; border-radius: 12px; font-weight: 700; font-size: 13px;
-    cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-    transition: transform 0.1s; text-align: left; display: flex; align-items: center; gap: 6px;
-  }
-  .action-btn:active { transform: scale(0.95); }
-  .action-btn.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
-  .action-btn.green { background: linear-gradient(135deg, #10b981, #059669); }
-  .action-btn.red { background: linear-gradient(135deg, #ef4444, #dc2626); }
-
-  /* Furniture Placement Bar */
-  #furnitureBar {
-    position: absolute; bottom: 25px; right: 15px;
-    background: rgba(15, 23, 42, 0.92); padding: 12px; border-radius: 16px;
-    border: 2px solid #10b981; color: white; z-index: 15;
-    display: none; flex-direction: column; gap: 8px; width: 220px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-  }
-  .furn-btn-row { display: flex; gap: 6px; }
-  .furn-btn {
-    flex: 1; padding: 8px; border: none; border-radius: 8px;
-    font-weight: 700; font-size: 12px; cursor: pointer; color: #fff;
-  }
-
-  /* Virtual Joystick */
-  #joystickZone {
-    position: absolute; bottom: 25px; left: 25px;
-    width: 130px; height: 130px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    z-index: 10; touch-action: none;
-  }
-  #joystickKnob {
-    position: absolute; top: 50%; left: 50%;
-    width: 54px; height: 54px; border-radius: 50%;
-    background: radial-gradient(circle, #60a5fa, #2563eb);
-    border: 3px solid #fff; transform: translate(-50%, -50%);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4); pointer-events: none;
-  }
-
-  /* Guide Toast */
-  #guideBar {
-    position: absolute; bottom: 165px; left: 15px;
-    background: rgba(0,0,0,0.75); color: #fbbf24; padding: 8px 12px;
-    border-radius: 10px; font-size: 12px; font-weight: 700;
-    max-width: 280px; pointer-events: none; z-index: 9;
-    border-left: 4px solid #fbbf24;
-  }
-
-  /* Modals */
-  .modal-overlay {
-    position: absolute; inset: 0; background: rgba(0,0,0,0.65);
-    display: none; justify-content: center; align-items: center; z-index: 30;
-    padding: 15px;
-  }
-  .modal-box {
-    background: #1e293b; color: #fff; width: 100%; max-width: 440px;
-    max-height: 82vh; border-radius: 18px; border: 2px solid rgba(255,255,255,0.15);
-    display: flex; flex-direction: column; overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-  }
-  .modal-header {
-    padding: 14px 18px; background: #0f172a;
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: 800; font-size: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-  .close-btn {
-    background: #ef4444; color: #fff; border: none; border-radius: 8px;
-    padding: 4px 10px; font-weight: 800; cursor: pointer;
-  }
-  .modal-body { padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-  .shop-item {
-    background: #334155; padding: 10px 12px; border-radius: 12px;
-    display: flex; justify-content: space-between; align-items: center; gap: 10px;
-  }
-  .shop-item-info h4 { margin: 0 0 3px 0; font-size: 14px; color: #f8fafc; }
-  .shop-item-info p { margin: 0; font-size: 11px; color: #cbd5e1; }
-  .buy-btn {
-    background: #10b981; color: #fff; border: none; padding: 8px 12px;
-    border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;
-    white-space: nowrap;
-  }
-  .buy-btn:disabled { background: #64748b; cursor: not-allowed; }
-  .buy-btn.active-brand { background: #f59e0b; }
-
-  /* Floating 3D Zone Labels */
-  #labelsContainer { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 5; }
-  .world-label {
-    position: absolute; transform: translate(-50%, -50%);
-    background: rgba(15, 23, 42, 0.82); color: #fff; padding: 4px 9px;
-    border-radius: 8px; font-size: 11px; font-weight: 700;
-    border: 1px solid rgba(255,255,255,0.25); white-space: nowrap;
-  }
+*{box-sizing:border-box;user-select:none;-webkit-user-select:none;font-family:sans-serif;margin:0;padding:0}
+body,html{width:100%;height:100%;overflow:hidden;background:#87ceeb}
+#c{width:100%;height:100%;display:block;position:fixed;inset:0;z-index:1}
+#hud{position:fixed;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;z-index:10;pointer-events:none}
+.card{background:rgba(15,23,42,.88);color:#fff;padding:6px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);font-weight:700;font-size:13px;pointer-events:auto}
+.banner{background:linear-gradient(135deg,#ff416c,#ff4b2b);color:#fff;padding:5px 12px;border-radius:10px;text-align:center}
+.banner h1{font-size:14px;text-transform:uppercase}.banner p{font-size:10px}
+#menu{position:fixed;right:10px;top:65px;display:flex;flex-direction:column;gap:8px;z-index:10}
+.btn{background:#2563eb;color:#fff;border:2px solid rgba(255,255,255,.3);padding:9px 12px;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.3)}
+.btn.org{background:#d97706}.btn.grn{background:#059669}.btn.red{background:#dc2626}
+#joy{position:fixed;bottom:22px;left:22px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.18);border:3px solid rgba(255,255,255,.4);z-index:10;touch-action:none}
+#knob{position:absolute;top:50%;left:50%;width:50px;height:50px;border-radius:50%;background:#2563eb;border:3px solid #fff;transform:translate(-50%,-50%);pointer-events:none}
+#fBar{position:fixed;bottom:20px;right:12px;background:rgba(15,23,42,.95);padding:10px;border-radius:12px;border:2px solid #10b981;color:#fff;z-index:15;display:none;flex-direction:column;gap:6px;width:205px}
+.fRow{display:flex;gap:5px}.fRow button{flex:1;padding:7px;border:none;border-radius:6px;font-weight:700;color:#fff;font-size:11px;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;justify-content:center;align-items:center;z-index:30;padding:12px}
+.mbox{background:#1e293b;color:#fff;width:100%;max-width:400px;max-height:80vh;border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+.mhead{padding:12px 15px;background:#0f172a;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:14px}
+.mbody{padding:12px;overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.item{background:#334155;padding:9px 11px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.item h4{font-size:13px;margin-bottom:2px}.item p{font-size:11px;color:#cbd5e1}
+.buy{background:#10b981;color:#fff;border:none;padding:7px 11px;border-radius:7px;font-weight:700;font-size:11px;cursor:pointer}
+#lbls{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5}
+.wlbl{position:absolute;transform:translate(-50%,-50%);background:rgba(15,23,42,.82);color:#fff;padding:3px 7px;border-radius:6px;font-size:10px;font-weight:700;white-space:nowrap;border:1px solid rgba(255,255,255,.25)}
 </style>
 </head>
 <body>
+<canvas id="c"></canvas>
+<div id="lbls"></div>
 
-<canvas id="gameCanvas"></canvas>
-<div id="labelsContainer"></div>
-
-<!-- TOP HUD -->
 <div id="hud">
-  <div style="display:flex; gap:8px; flex-wrap:wrap;">
-    <div class="hud-card">💵 ₹<span id="moneyText">150</span></div>
-    <div class="hud-card">📦 Hand: <span id="carryText">0/3</span> (<span id="carryType">Empty</span>)</div>
-    <div class="hud-card">🥤 Brand: <span id="activeBrandText" style="color:#ff6b6b;">Roka Rola</span></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <div class="card">💵 ₹<span id="mTxt">150</span></div>
+    <div class="card">📦 <span id="cTxt">0/3 (Empty)</span></div>
+    <div class="card">🥤 <span id="bTxt" style="color:#ff6b6b">Roka Rola</span></div>
   </div>
-  <div class="brand-banner">
-    <h1>🥤 My Soda Shop</h1>
-    <p>Dev: Rishav Kumar Vishwakarma</p>
+  <div class="banner"><h1>🥤 My Soda Shop 3D</h1><p>Dev: Rishav Kumar Vishwakarma</p></div>
+</div>
+
+<div id="menu">
+  <button class="btn" onclick="openM('upM')">⚡ Upgrades & Staff</button>
+  <button class="btn org" onclick="openM('brM')">🥤 Brands & Expand</button>
+  <button class="btn grn" onclick="toggleF()">🪑 Furniture (<span id="fCnt">1/3</span>)</button>
+  <button class="btn red" onclick="emptyH()">🗑️ Empty Hand</button>
+</div>
+
+<div id="joy"><div id="knob"></div></div>
+
+<div id="fBar">
+  <b style="font-size:12px;color:#34d399">🪑 Place Furniture Anywhere</b>
+  <div class="fRow">
+    <button style="background:#10b981" onclick="placeF()">✅ Place</button>
+    <button style="background:#3b82f6" onclick="rotF()">🔄 Rotate</button>
   </div>
-</div>
-
-<!-- RIGHT BUTTONS -->
-<div id="sideMenu">
-  <button class="action-btn" onclick="openModal('upgradeModal')">⚡ Upgrades & Staff</button>
-  <button class="action-btn orange" onclick="openModal('brandModal')">🥤 Soda Brands & Expand</button>
-  <button class="action-btn green" onclick="toggleFurnitureMode()">🪑 Furniture (<span id="furnCountText">1</span>/<span id="furnMaxText">3</span>)</button>
-  <button class="action-btn red" onclick="clearPlayerHands()">🗑️ Empty Hands</button>
-</div>
-
-<!-- GUIDE BAR -->
-<div id="guideBar">
-  💡 Tip: Sabse peeche <b>FARM</b> (Green) se Ingredients lo ➔ <b>FACTORY</b> mein dalo ➔ Soda le kar <b>SHOP FRIDGE</b> mein bharo!
-</div>
-
-<!-- JOYSTICK -->
-<div id="joystickZone">
-  <div id="joystickKnob"></div>
-</div>
-
-<!-- FURNITURE PLACEMENT CONTROLS -->
-<div id="furnitureBar">
-  <div style="font-size:13px; font-weight:800; color:#34d399;">🪑 Place Furniture Anywhere</div>
-  <div style="font-size:11px; color:#cbd5e1;">Jahan green box dikhe wahan Fridge lagayein ya purana Fridge uthayein!</div>
-  <div class="furn-btn-row">
-    <button class="furn-btn" style="background:#10b981;" onclick="placeFurnitureHere()">✅ Place</button>
-    <button class="furn-btn" style="background:#3b82f6;" onclick="rotateFurniturePreview()">🔄 Rotate</button>
-  </div>
-  <div class="furn-btn-row">
-    <button class="furn-btn" style="background:#f59e0b;" onclick="pickupNearestFurniture()">📥 Pick Up Nearest</button>
-    <button class="furn-btn" style="background:#ef4444;" onclick="toggleFurnitureMode()">✖ Close</button>
+  <div class="fRow">
+    <button style="background:#f59e0b" onclick="pickF()">📥 Pick Up</button>
+    <button style="background:#ef4444" onclick="toggleF()">✖ Close</button>
   </div>
 </div>
 
-<!-- MODAL 1: UPGRADES & EMPLOYEES -->
-<div class="modal-overlay" id="upgradeModal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span>⚡ Player Upgrades & Employees</span>
-      <button class="close-btn" onclick="closeModal('upgradeModal')">X</button>
-    </div>
-    <div class="modal-body" id="upgradeList"></div>
-  </div>
-</div>
+<div class="modal" id="upM"><div class="mbox"><div class="mhead"><span>⚡ Upgrades & Staff</span><button class="buy" style="background:#ef4444" onclick="closeM('upM')">X</button></div><div class="mbody" id="upList"></div></div></div>
+<div class="modal" id="brM"><div class="mbox"><div class="mhead"><span>🥤 Soda Brands & Expand</span><button class="buy" style="background:#ef4444" onclick="closeM('brM')">X</button></div><div class="mbody" id="brList"></div></div></div>
 
-<!-- MODAL 2: BRANDS, FURNITURE SHOP & EXPAND -->
-<div class="modal-overlay" id="brandModal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span>🥤 Soda Brands, Furniture & Expand</span>
-      <button class="close-btn" onclick="closeModal('brandModal')">X</button>
-    </div>
-    <div class="modal-body" id="brandList"></div>
-  </div>
-</div>
-
-<!-- THREE.JS CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ==========================================
-// MY SODA SHOP 3D - BY RISHAV KUMAR VISHWAKARMA
-// ==========================================
-
-const SODA_BRANDS = [
-  { id: 0, name: "Roka Rola", price: 15, unlockCost: 0, color: 0xe11d48, hex: "#e11d48", unlocked: true },
-  { id: 1, name: "Thumbs Down", price: 25, unlockCost: 150, color: 0x3b2f2f, hex: "#9ca3af", unlocked: false },
-  { id: 2, name: "Aprite", price: 40, unlockCost: 350, color: 0x10b981, hex: "#10b981", unlocked: false },
-  { id: 3, name: "Jampa Cola", price: 60, unlockCost: 700, color: 0xf97316, hex: "#f97316", unlocked: false },
-  { id: 4, name: "Mimca", price: 90, unlockCost: 1200, color: 0x84cc16, hex: "#84cc16", unlocked: false },
-  { id: 5, name: "Bluebull", price: 140, unlockCost: 2200, color: 0x2563eb, hex: "#60a5fa", unlocked: false }
+const BRANDS=[
+  {id:0,n:"Roka Rola",p:15,c:0,col:0xe11d48,hex:"#ff6b6b",u:true},
+  {id:1,n:"Thumbs Down",p:25,c:150,col:0x4b5563,hex:"#9ca3af",u:false},
+  {id:2,n:"Aprite",p:40,c:350,col:0x10b981,hex:"#34d399",u:false},
+  {id:3,n:"Jampa Cola",p:60,c:700,col:0xf97316,hex:"#fb923c",u:false},
+  {id:4,n:"Mimca",p:90,c:1200,col:0x84cc16,hex:"#a3e635",u:false},
+  {id:5,n:"Bluebull",p:140,c:2200,col:0x2563eb,hex:"#60a5fa",u:false}
 ];
 
-const state = {
-  money: 150,
-  activeBrand: 0,
-  player: {
-    speedLevel: 1,
-    speed: 9,
-    maxCarry: 3,
-    carryLevel: 1,
-    carrying: [], // { type: 'ingredient' | 'soda', brandId: 0 }
-    furnInventory: 1, // Starts with 1 free Fridge to place anywhere!
-    maxFurnInventory: 3,
-    furnCapLevel: 1
-  },
-  employees: {
-    farmer: 0,
-    labour: 0,
-    cashier: 0
-  },
-  expansionLevel: 1,
-  furnitureMode: false,
-  furnRotation: 0
-};
+const S={money:150,brand:0,spdLv:1,spd:9,capLv:1,maxCap:3,hand:[],fBag:1,maxFBag:3,fLv:1,emp:{farmer:0,labour:0,cashier:0},expLv:1,fMode:false,fRot:0};
 
-// --- THREE.JS SCENE SETUP ---
-const canvas = document.getElementById('gameCanvas');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
+// THREE.JS 3D INIT
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x87ceeb);
+const camera=new THREE.PerspectiveCamera(50,window.innerWidth/window.innerHeight,0.1,150);
+const renderer=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87ceeb);
-scene.fog = new THREE.Fog(0x87ceeb, 38, 80);
+scene.add(new THREE.AmbientLight(0xffffff,0.75));
+const sun=new THREE.DirectionalLight(0xfffbeb,0.85);
+sun.position.set(15,30,20);
+scene.add(sun);
 
-const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 120);
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-scene.add(ambientLight);
-
-const dirLight = new THREE.DirectionalLight(0xfffbeb, 0.85);
-dirLight.position.set(18, 32, 22);
-dirLight.castShadow = true;
-dirLight.shadow.mapSize.width = 1024;
-dirLight.shadow.mapSize.height = 1024;
-scene.add(dirLight);
-
-// --- HELPER: CREATE 3D BOX ---
-function makeBox(w, h, d, color, x, y, z) {
-  const geo = new THREE.BoxGeometry(w, h, d);
-  const mat = new THREE.MeshLambertMaterial({ color });
-  const mesh = new THREE.Mesh(geo, mat);
-  mesh.position.set(x, y, z);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  scene.add(mesh);
-  return mesh;
+function box(w,h,d,col,x,y,z,parent=scene){
+  const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:col}));
+  m.position.set(x,y,z);parent.add(m);return m;
 }
 
-// --- HELPER: FLOATING HTML LABELS ---
-const labelsContainer = document.getElementById('labelsContainer');
-const worldLabels = [];
-function createWorldLabel(text, posVec3, bg = "rgba(15,23,42,0.85)") {
-  const div = document.createElement('div');
-  div.className = 'world-label';
-  div.style.background = bg;
-  div.innerHTML = text;
-  labelsContainer.appendChild(div);
-  const item = { div, pos: posVec3.clone() };
-  worldLabels.push(item);
-  return item;
+const lblBox=document.getElementById('lbls'),wLbls=[];
+function addLbl(txt,x,y,z,bg="rgba(15,23,42,.85)"){
+  const d=document.createElement('div');d.className='wlbl';d.style.background=bg;d.innerHTML=txt;
+  lblBox.appendChild(d);const o={d,v:new THREE.Vector3(x,y,z)};wLbls.push(o);return o;
 }
 
-function updateWorldLabels() {
-  for (const lbl of worldLabels) {
-    const v = lbl.pos.clone().project(camera);
-    if (v.z > 1) {
-      lbl.div.style.display = 'none';
-      continue;
-    }
-    const x = (v.x * 0.5 + 0.5) * window.innerWidth;
-    const y = (-(v.y * 0.5) + 0.5) * window.innerHeight;
-    lbl.div.style.display = 'block';
-    lbl.div.style.left = `${x}px`;
-    lbl.div.style.top = `${y}px`;
-  }
-}
+// 4 LOCATIONS FLOORS & WALLS
+const fFarm=box(24,0.4,11,0x16a34a,0,-0.2,-20.5);
+const fFact=box(24,0.4,10,0x475569,0,-0.2,-10);
+const fGodown=box(24,0.4,9,0x92400e,0,-0.2,-0.5);
+const fShop=box(24,0.4,16,0xf1f5f9,0,-0.2,12);
+box(40,0.3,8,0x334155,0,-0.25,24); // Road
 
-// --- BUILD THE 4 LOCATIONS ---
-// 1. FARM (Z: -25 to -15)
-const farmFloor = makeBox(24, 0.4, 11, 0x15803d, 0, -0.2, -20.5);
-// 2. FACTORY (Z: -15 to -5)
-const factoryFloor = makeBox(24, 0.4, 10, 0x475569, 0, -0.2, -10);
-// 3. GODOWN (Z: -5 to +4)
-const godownFloor = makeBox(24, 0.4, 9, 0x78350f, 0, -0.2, -0.5);
-// 4. MAIN SHOP / SHOWROOM (Z: +4 to +20)
-const shopFloor = makeBox(24, 0.4, 16, 0xe2e8f0, 0, -0.2, 12);
-// Street in front (Z: +20 to +28)
-makeBox(40, 0.3, 8, 0x334155, 0, -0.25, 24);
+[-15,-5,4].forEach((z,i)=>{
+  const c=[0x94a3b8,0xd97706,0x3b82f6][i];
+  box(8,2.2,0.4,c,-8,1.1,z);box(8,2.2,0.4,c,8,1.1,z);
+});
+const wallL=box(0.5,2.5,46,0x64748b,-12,1.25,-2),wallR=box(0.5,2.5,46,0x64748b,12,1.25,-2);
 
-// Zone Divider Walls (with wide open walk-through doors in center)
-function createDividerWall(zPos, color) {
-  makeBox(8, 2.2, 0.4, color, -8, 1.1, zPos);
-  makeBox(8, 2.2, 0.4, color, 8, 1.1, zPos);
-}
-createDividerWall(-15, 0x94a3b8); // Farm - Factory
-createDividerWall(-5, 0xb45309);  // Factory - Godown
-createDividerWall(4, 0x3b82f6);   // Godown - Main Shop
+addLbl("🌾 4. FARM (Ingredients)",0,3.2,-23,"#15803d");
+addLbl("🏭 3. SODA FACTORY",0,3.2,-13,"#334155");
+addLbl("📦 2. GODOWN (Storage)",0,3.2,-3.5,"#78350f");
+addLbl("🏪 1. MAIN SHOWROOM",0,3.2,6,"#2563eb");
 
-// Side Boundary Walls
-const leftWall = makeBox(0.5, 2.5, 46, 0x64748b, -12, 1.25, -2);
-const rightWall = makeBox(0.5, 2.5, 46, 0x64748b, 12, 1.25, -2);
-
-// Zone Titles
-createWorldLabel("🌾 4. FARM (Ingredients)", new THREE.Vector3(0, 3.2, -23), "rgba(21,128,61,0.9)");
-createWorldLabel("🏭 3. SODA FACTORY", new THREE.Vector3(0, 3.2, -13), "rgba(51,65,85,0.9)");
-createWorldLabel("📦 2. GODOWN (Storage)", new THREE.Vector3(0, 3.2, -3.5), "rgba(120,53,15,0.9)");
-createWorldLabel("🏪 1. MAIN SODA SHOWROOM", new THREE.Vector3(0, 3.2, 6), "rgba(37,99,235,0.9)");
-
-// --- 1. FARM PLOTS (Ingredients) ---
-const farmPlots = [];
-const plotCoords = [[-6, -21], [-2, -21], [2, -21], [6, -21]];
-plotCoords.forEach(([px, pz]) => {
-  makeBox(2.4, 0.3, 2.4, 0x3f2e21, px, 0.15, pz); // Soil
-  const cropMesh = makeBox(1.2, 1.2, 1.2, 0x84cc16, px, 0.9, pz);
-  farmPlots.push({ x: px, z: pz, ready: true, timer: 0, mesh: cropMesh });
+// FARM CROPS
+const plots=[-6,-2,2,6].map(x=>{
+  box(2.4,0.3,2.4,0x451a03,x,0.15,-21);
+  return {x,z:-21,ok:true,t:0,m:box(1.3,1.3,1.3,0x84cc16,x,0.9,-21)};
 });
 
-// --- 2. FACTORY MACHINE ---
-const factoryObj = {
-  inX: -4.5, inZ: -10,
-  outX: 4.5, outZ: -10,
-  rawCount: 0,
-  sodaCount: 0,
-  maxStock: 12,
-  progress: 0
-};
-// Input Pad
-makeBox(2.6, 0.2, 2.6, 0xf59e0b, factoryObj.inX, 0.1, factoryObj.inZ);
-// Central Soda Boiler Machine
-const boilerMesh = makeBox(4.2, 2.8, 2.8, 0xdc2626, 0, 1.4, -10);
-makeBox(0.8, 1.5, 0.8, 0x94a3b8, -1, 3.2, -10); // Chimney
-// Output Pad
-makeBox(2.6, 0.2, 2.6, 0x10b981, factoryObj.outX, 0.1, factoryObj.outZ);
+// FACTORY MACHINE
+const fact={inX:-4.5,inZ:-10,outX:4.5,outZ:-10,raw:0,soda:0,prog:0};
+box(2.5,0.2,2.5,0xf59e0b,fact.inX,0.1,fact.inZ);
+const boiler=box(4,2.8,2.8,0xe11d48,0,1.4,-10);
+const topCan=box(1.2,1.6,1.2,0xffffff,0,3.4,-10);
+box(2.5,0.2,2.5,0x10b981,fact.outX,0.1,fact.outZ);
+const fInL=addLbl("📥 Ingredients (0)",fact.inX,2.2,fact.inZ);
+const fOutL=addLbl("📤 Soda (0)",fact.outX,2.2,fact.outZ);
 
-const factoryInLabel = createWorldLabel("📥 Drop Ingredients (0)", new THREE.Vector3(factoryObj.inX, 2.2, factoryObj.inZ));
-const factoryOutLabel = createWorldLabel("📤 Pickup Soda (0)", new THREE.Vector3(factoryObj.outX, 2.2, factoryObj.outZ));
+// GODOWN & TRASH
+const gRack={x:-5,z:-0.5,items:[],max:15};
+box(3.5,2.2,2,0x78350f,gRack.x,1.1,gRack.z);
+const gLbl=addLbl("📦 Godown (0/15)",gRack.x,2.8,gRack.z);
+box(1.5,1.4,1.5,0xef4444,6,0.7,-0.5);
+addLbl("🗑️ Trash",6,2,-0.5,"#dc2626");
 
-// --- 3. GODOWN STORAGE RACK & TRASH BIN ---
-const godownRack = {
-  x: -5, z: -0.5,
-  items: [], // { brandId }
-  max: 15
-};
-makeBox(3.5, 2.2, 2.0, 0x92400e, godownRack.x, 1.1, godownRack.z);
-const godownLabel = createWorldLabel("📦 Godown Rack (0/15)", new THREE.Vector3(godownRack.x, 2.8, godownRack.z));
+// CASH COUNTER
+const cnt={x:-5.5,z:15,cash:0,t:0};
+box(3.8,1.3,2,0x1e40af,cnt.x,0.65,cnt.z);
+box(2,0.1,2,0x60a5fa,cnt.x,0.05,cnt.z-2);
+box(2.2,0.15,2.2,0x22c55e,cnt.x+3.2,0.08,cnt.z);
+addLbl("💳 Billing Counter",cnt.x,2.3,cnt.z);
+const cashL=addLbl("💵 Cash: ₹0",cnt.x+3.2,1.8,cnt.z,"#16a34a");
 
-const trashBin = { x: 6, z: -0.5 };
-makeBox(1.6, 1.4, 1.6, 0xef4444, trashBin.x, 0.7, trashBin.z);
-createWorldLabel("🗑️ Trash Bin", new THREE.Vector3(trashBin.x, 2.0, trashBin.z), "rgba(220,38,38,0.85)");
-
-// --- 4. MAIN SHOP: CASH COUNTER & CASH PILE ---
-const counterObj = {
-  x: -5.5, z: 15,
-  cashOnTable: 0,
-  cashTimer: 0
-};
-makeBox(3.8, 1.3, 2.0, 0x1e40af, counterObj.x, 0.65, counterObj.z);
-// Cash Pad (where player stands to bill customers)
-makeBox(2.0, 0.1, 2.0, 0x60a5fa, counterObj.x, 0.05, counterObj.z - 2.0);
-// Money pickup pad
-makeBox(2.2, 0.15, 2.2, 0x22c55e, counterObj.x + 3.2, 0.08, counterObj.z);
-const counterLabel = createWorldLabel("💳 Cashier Counter", new THREE.Vector3(counterObj.x, 2.3, counterObj.z));
-const cashPileLabel = createWorldLabel("💵 Cash: ₹0", new THREE.Vector3(counterObj.x + 3.2, 1.8, counterObj.z), "rgba(22,163,74,0.9)");
-
-// --- PLACEABLE FURNITURE (SODA FRIDGES) ---
-const fridges = [];
-function createFridge(x, z, rot = 0) {
-  const group = new THREE.Group();
-  group.position.set(x, 0, z);
-  group.rotation.y = rot;
-
-  const bodyGeo = new THREE.BoxGeometry(2.6, 2.6, 1.4);
-  const bodyMat = new THREE.MeshLambertMaterial({ color: 0x0284c7 });
-  const body = new THREE.Mesh(bodyGeo, bodyMat);
-  body.position.y = 1.3;
-  body.castShadow = true;
-  group.add(body);
-
-  // Glass Front
-  const glassGeo = new THREE.BoxGeometry(2.2, 2.0, 0.15);
-  const glassMat = new THREE.MeshLambertMaterial({ color: 0xe0f2fe });
-  const glass = new THREE.Mesh(glassGeo, glassMat);
-  glass.position.set(0, 1.3, 0.7);
-  group.add(glass);
-
-  scene.add(group);
-
-  const label = createWorldLabel("🧊 Fridge (0/8)", new THREE.Vector3(x, 3.1, z), "rgba(2,132,199,0.9)");
-  const fObj = { x, z, rot, group, items: [], max: 8, label };
-  fridges.push(fObj);
-  return fObj;
+// FRIDGES (PLACE ANYWHERE)
+const fridges=[];
+function addFridge(x,z,rot=0){
+  const g=new THREE.Group();g.position.set(x,0,z);g.rotation.y=rot;
+  box(2.6,2.6,1.4,0x0284c7,0,1.3,0,g);
+  box(2.2,2,0.15,0xe0f2fe,0,1.3,0.7,g);
+  scene.add(g);
+  const l=addLbl("🧊 Fridge (0/8)",x,3.1,z,"#0284c7");
+  fridges.push({x,z,rot,g,items:[],max:8,l});
 }
+addFridge(4.5,11,0);
 
-// Spawn 1 Starter Fridge in the Main Shop
-createFridge(4.5, 11, 0);
+const ghost=new THREE.Mesh(new THREE.BoxGeometry(2.6,2.6,1.4),new THREE.MeshBasicMaterial({color:0x10b981,transparent:true,opacity:0.5}));
+ghost.position.y=1.3;ghost.visible=false;scene.add(ghost);
 
-// Furniture Preview Ghost Mesh
-const previewGroup = new THREE.Group();
-const previewBox = new THREE.Mesh(
-  new THREE.BoxGeometry(2.6, 2.6, 1.4),
-  new THREE.MeshBasicMaterial({ color: 0x10b981, wireframe: false, transparent: true, opacity: 0.55 })
-);
-previewBox.position.y = 1.3;
-previewGroup.add(previewBox);
-previewGroup.visible = false;
-scene.add(previewGroup);
-
-// --- CHARACTER BUILDER (PLAYER, STAFF, CUSTOMERS) ---
-function createCharacterMesh(shirtColor) {
-  const group = new THREE.Group();
-  // Body
-  const body = new THREE.Mesh(new THREE.BoxGeometry(0.9, 1.2, 0.6), new THREE.MeshLambertMaterial({ color: shirtColor }));
-  body.position.y = 0.9;
-  body.castShadow = true;
-  group.add(body);
-  // Head
-  const head = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.65, 0.65), new THREE.MeshLambertMaterial({ color: 0xfde047 }));
-  head.position.y = 1.85;
-  group.add(head);
-  // Carry Stack Container
-  const stackGroup = new THREE.Group();
-  stackGroup.position.set(0, 1.1, 0.65);
-  group.add(stackGroup);
-
-  scene.add(group);
-  return { group, stackGroup };
+// 3D CHARACTERS
+function makeChar(col){
+  const g=new THREE.Group();
+  box(0.5,0.6,0.4,0x1e293b,-0.22,0.3,0,g); // Left Leg
+  box(0.5,0.6,0.4,0x1e293b,0.22,0.3,0,g);  // Right Leg
+  box(1,1.1,0.6,col,0,1.15,0,g);            // Torso
+  box(0.7,0.7,0.7,0xfde047,0,2.1,0,g);      // Head
+  const st=new THREE.Group();st.position.set(0,1.2,0.65);g.add(st);
+  scene.add(g);return {g,st};
 }
-
-function updateCarryVisuals(stackGroup, carryingList) {
-  while (stackGroup.children.length > 0) {
-    stackGroup.remove(stackGroup.children[0]);
-  }
-  carryingList.forEach((item, idx) => {
-    const col = item.type === 'ingredient' ? 0x84cc16 : SODA_BRANDS[item.brandId].color;
-    const crate = new THREE.Mesh(
-      new THREE.BoxGeometry(0.75, 0.35, 0.55),
-      new THREE.MeshLambertMaterial({ color: col })
-    );
-    crate.position.y = idx * 0.38;
-    stackGroup.add(crate);
+function drawStack(st,list){
+  while(st.children.length)st.remove(st.children[0]);
+  list.forEach((it,i)=>{
+    const c=it.t==='ing'?0x84cc16:BRANDS[it.b].col;
+    box(0.8,0.36,0.6,c,0,i*0.4,0,st);
   });
 }
 
-// Create Main Player
-const playerChar = createCharacterMesh(0xff416c);
-playerChar.group.position.set(0, 0, 8);
-const playerLabel = createWorldLabel("👑 YOU (Rishav)", new THREE.Vector3(0, 2.7, 8), "rgba(225,29,72,0.9)");
+const pChar=makeChar(0xff416c);pChar.g.position.set(0,0,8);
+const pLbl=addLbl("👑 YOU (Rishav)",0,2.9,8,"#e11d48");
 
-// --- CONTROLS: JOYSTICK & KEYBOARD ---
-const joyInput = { x: 0, y: 0 };
-const keys = {};
-window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
-window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+// JOYSTICK & KEYS
+const joy={x:0,y:0},keys={};
+window.onkeydown=e=>keys[e.key.toLowerCase()]=true;
+window.onkeyup=e=>keys[e.key.toLowerCase()]=false;
+const jZone=document.getElementById('joy'),jKnob=document.getElementById('knob');
+let jAct=false;
+function moveJ(cx,cy){
+  const r=jZone.getBoundingClientRect(),ox=r.left+r.width/2,oy=r.top+r.height/2;
+  let dx=cx-ox,dy=cy-oy,d=Math.hypot(dx,dy),m=r.width/2-20;
+  if(d>m){dx=dx/d*m;dy=dy/d*m;}
+  jKnob.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px))`;
+  joy.x=dx/m;joy.y=dy/m;
+}
+jZone.onpointerdown=e=>{jAct=true;jZone.setPointerCapture(e.pointerId);moveJ(e.clientX,e.clientY)};
+jZone.onpointermove=e=>{if(jAct)moveJ(e.clientX,e.clientY)};
+jZone.onpointerup=jZone.onpointercancel=()=>{jAct=false;joy.x=0;joy.y=0;jKnob.style.transform='translate(-50%,-50%)'};
 
-const joyZone = document.getElementById('joystickZone');
-const joyKnob = document.getElementById('joystickKnob');
-let joyActive = false;
-
-function handleJoyMove(clientX, clientY) {
-  const rect = joyZone.getBoundingClientRect();
-  const cx = rect.left + rect.width / 2;
-  const cy = rect.top + rect.height / 2;
-  let dx = clientX - cx;
-  let dy = clientY - cy;
-  const dist = Math.hypot(dx, dy);
-  const maxR = rect.width / 2 - 20;
-  if (dist > maxR) {
-    dx = (dx / dist) * maxR;
-    dy = (dy / dist) * maxR;
-  }
-  joyKnob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-  joyInput.x = dx / maxR;
-  joyInput.y = dy / maxR;
+// WORKERS & CUSTOMERS
+const workers=[],custs=[];let cTimer=0;
+function addWorker(role){
+  const col={farmer:0x16a34a,labour:0xf59e0b,cashier:0x8b5cf6}[role];
+  const ch=makeChar(col);
+  const x=role==='cashier'?cnt.x:0,z=role==='farmer'?-18:(role==='labour'?-6:cnt.z-2);
+  ch.g.position.set(x,0,z);
+  const l=addLbl({farmer:"👨‍🌾 Farmer",labour:"👷 Labour",cashier:"🧑‍💼 Cashier"}[role],x,2.8,z);
+  workers.push({role,ch,l,hand:[]});
+}
+function stepTo(p,tx,tz,spd,dt){
+  const dx=tx-p.x,dz=tz-p.z,d=Math.hypot(dx,dz);
+  if(d<0.25)return true;
+  p.x+=dx/d*spd*dt;p.z+=dz/d*spd*dt;return false;
 }
 
-function resetJoy() {
-  joyActive = false;
-  joyInput.x = 0;
-  joyInput.y = 0;
-  joyKnob.style.transform = `translate(-50%, -50%)`;
+// UI ACTIONS
+function syncUI(){
+  document.getElementById('mTxt').innerText=Math.floor(S.money);
+  const hTxt=S.hand.length?`${S.hand.length}/${S.maxCap} (${S.hand[0].t==='ing'?'Ingredients':BRANDS[S.hand[0].b].n})`:`0/${S.maxCap} (Empty)`;
+  document.getElementById('cTxt').innerText=hTxt;
+  const b=BRANDS[S.brand],bEl=document.getElementById('bTxt');
+  bEl.innerText=b.n;bEl.style.color=b.hex;
+  document.getElementById('fCnt').innerText=`${S.fBag}/${S.maxFBag}`;
 }
-
-joyZone.addEventListener('pointerdown', e => {
-  joyActive = true;
-  joyZone.setPointerCapture(e.pointerId);
-  handleJoyMove(e.clientX, e.clientY);
-});
-joyZone.addEventListener('pointermove', e => {
-  if (joyActive) handleJoyMove(e.clientX, e.clientY);
-});
-joyZone.addEventListener('pointerup', resetJoy);
-joyZone.addEventListener('pointercancel', resetJoy);
-
-// --- AI EMPLOYEES ---
-const aiWorkers = [];
-function spawnWorker(role) {
-  // --- AI EMPLOYEES ---
-const aiWorkers = [];
-function spawnWorker(role) {
-  const colors = { farmer: 0x16a34a, labour: 0xf59e0b, cashier: 0x8b5cf6 };
-  const char = createCharacterMesh(colors[role]);
-  let startZ = role === 'farmer' ? -18 : (role === 'labour' ? -6 : 13);
-  let startX = role === 'cashier' ? counterObj.x : 0;
-  char.group.position.set(startX, 0, startZ);
-
-  const titles = { farmer: "👨‍🌾 Farmer", labour: "👷 Factory Labour", cashier: "🧑‍💼 Cashier" };
-  const lbl = createWorldLabel(titles[role], new THREE.Vector3(startX, 2.5, startZ));
-  aiWorkers.push({ role, char, lbl, carrying: [], timer: 0 });
+function toggleF(){S.fMode=!S.fMode;document.getElementById('fBar').style.display=S.fMode?'flex':'none';ghost.visible=S.fMode;}
+function rotF(){S.fRot+=Math.PI/2;ghost.rotation.y=S.fRot;}
+function placeF(){
+  if(S.fBag<=0)return alert("Furniture Bag khali hai! Brands menu se naya Fridge lein ya purana Pick Up karein.");
+  addFridge(ghost.position.x,ghost.position.z,S.fRot);S.fBag--;syncUI();
 }
+function pickF(){
+  if(fridges.length<=1)return alert("Shop mein kam se kam 1 Fridge zaroori hai!");
+  if(S.fBag>=S.maxFBag)return alert("Furniture Bag full hai!");
+  let idx=-1,best=6;
+  fridges.forEach((f,i)=>{const d=Math.hypot(pChar.g.position.x-f.x,pChar.g.position.z-f.z);if(d<best){best=d;idx=i;}});
+  if(idx<0)return alert("Fridge ke paas jaakar Pick Up dabayein!");
+  const f=fridges[idx];scene.remove(f.g);f.l.d.remove();wLbls.splice(wLbls.indexOf(f.l),1);fridges.splice(idx,1);
+  S.fBag++;syncUI();
+}
+function emptyH(){S.hand=[];drawStack(pChar.st,S.hand);syncUI();}
+function openM(id){renderM();document.getElementById(id).style.display='flex';}
+function closeM(id){document.getElementById(id).style.display='none';}
 
-// --- CUSTOMERS SYSTEM ---
-const customers = [];
-let customerSpawnTimer = 0;
-
-function spawnCustomer() {
-  if (customers.length >= 4 + state.expansionLevel * 2) return;
-  if (fridges.length === 0) return;
-  const char = createCharacterMesh(0x38bdf8);
-  const startX = (Math.random() - 0.5) * 14;
-  char.group.position.set(startX, 0, 25);
-  const targetFridge = fridges[Math.floor(Math.random() * fridges.length)];
-  customers.push({
-    char,
-    state: 'walk_to_fridge',
-    targetFridge,
-    item: null
+function renderM(){
+  const sc=S.spdLv*80,cc=S.capLv*100,fc=S.fLv*120,c1=150+S.emp.cashier*200,c2=180+S.emp.farmer*200,c3=220+S.emp.labour*250;
+  document.getElementById('upList').innerHTML=`
+    <div class="item"><div><h4>🏃 Speed (Lv.${S.spdLv})</h4><p>Player walking speed badhayein</p></div><button class="buy" onclick="buyU('spd',${sc})">₹${sc}</button></div>
+    <div class="item"><div><h4>💪 Carry Capacity (${S.maxCap})</h4><p>Zyada crates haath mein uthayein</p></div><button class="buy" onclick="buyU('cap',${cc})">₹${cc}</button></div>
+    <div class="item"><div><h4>🎒 Furniture Bag (${S.maxFBag})</h4><p>Big furniture storage badhayein</p></div><button class="buy" onclick="buyU('fbag',${fc})">₹${fc}</button></div>
+    <div class="item"><div><h4>🧑‍💼 Cashier (${S.emp.cashier})</h4><p>Auto customer billing</p></div><button class="buy" onclick="buyU('cashier',${c1})">₹${c1}</button></div>
+    <div class="item"><div><h4>👨‍🌾 Farmer (${S.emp.farmer})</h4><p>Auto farm to factory</p></div><button class="buy" onclick="buyU('farmer',${c2})">₹${c2}</button></div>
+    <div class="item"><div><h4>👷 Factory Labour (${S.emp.labour})</h4><p>Auto factory to shop fridge</p></div><button class="buy" onclick="buyU('labour',${c3})">₹${c3}</button></div>`;
+  let bh=`
+    <div class="item"><div><h4>🧊 Buy Extra Fridge</h4><p>Kahin bhi place karne ke liye</p></div><button class="buy" onclick="buyF(120)">₹120</button></div>
+    <div class="item"><div><h4>🏗️ Expand Area (Lv.${S.expLv})</h4><p>Badi shop aur zyada customers</p></div><button class="buy" onclick="buyE(${S.expLv*300})">₹${S.expLv*300}</button></div>`;
+  BRANDS.forEach(b=>{
+    const btn=b.u?`<button class="buy" style="background:${S.brand===b.id?'#f59e0b':'#10b981'}" onclick="setB(${b.id})">${S.brand===b.id?'Active':'Select'}</button>`:`<button class="buy" onclick="unB(${b.id})">Unlock ₹${b.c}</button>`;
+    bh+=`<div class="item"><div><h4 style="color:${b.hex}">🥤 ${b.n}</h4><p>Sell Price: ₹${b.p}</p></div>${btn}</div>`;
   });
+  document.getElementById('brList').innerHTML=bh;
 }
-
-function moveTowards(pos, tx, tz, speed, dt) {
-  const dx = tx - pos.x;
-  const dz = tz - pos.z;
-  const d = Math.hypot(dx, dz);
-  if (d < 0.25) return true;
-  pos.x += (dx / d) * speed * dt;
-  pos.z += (dz / d) * speed * dt;
-  return false;
+function buyU(t,c){
+  if(S.money<c)return alert("Paise kam hain!");S.money-=c;
+  if(t==='spd'){S.spdLv++;S.spd+=1.5;}if(t==='cap'){S.capLv++;S.maxCap+=2;}if(t==='fbag'){S.fLv++;S.maxFBag+=2;}
+  if(['cashier','farmer','labour'].includes(t)){S.emp[t]++;addWorker(t);}
+  syncUI();renderM();
 }
-
-// --- FURNITURE PLACEMENT SYSTEM ---
-function toggleFurnitureMode() {
-  state.furnitureMode = !state.furnitureMode;
-  document.getElementById('furnitureBar').style.display = state.furnitureMode ? 'flex' : 'none';
-  previewGroup.visible = state.furnitureMode;
+function buyF(c){if(S.money<c||S.fBag>=S.maxFBag)return alert("Paise kam hain ya Bag full hai!");S.money-=c;S.fBag++;syncUI();renderM();}
+function buyE(c){
+  if(S.money<c)return alert("Paise kam hain!");S.money-=c;S.expLv++;
+  const sx=1+(S.expLv-1)*0.2;[fFarm,fFact,fGodown,fShop].forEach(f=>f.scale.x=sx);
+  wallL.position.x=-12*sx;wallR.position.x=12*sx;syncUI();renderM();
 }
+function unB(id){const b=BRANDS[id];if(S.money<b.c)return alert("Paise kam hain!");S.money-=b.c;b.u=true;setB(id);}
+function setB(id){S.brand=id;boiler.material.color.setHex(BRANDS[id].col);syncUI();renderM();}
 
-function rotateFurniturePreview() {
-  state.furnRotation += Math.PI / 2;
-  previewGroup.rotation.y = state.furnRotation;
-}
+// MAIN 3D GAME LOOP
+let last=performance.now(),cd=0;
+function loop(now){
+  requestAnimationFrame(loop);
+  const dt=Math.min((now-last)/1000,0.1);last=now;cd=Math.max(0,cd-dt);
+  topCan.rotation.y+=dt*2;
 
-function placeFurnitureHere() {
-  if (state.player.furnInventory <= 0) {
-    alert("Aapke Furniture Bag mein Fridge nahi hai! 'Soda Brands & Expand' menu se naya Fridge khareedein ya purana Pick Up karein.");
-    return;
+  let mx=joy.x,mz=joy.y;
+  if(keys.w||keys.arrowup)mz=-1;if(keys.s||keys.arrowdown)mz=1;
+  if(keys.a||keys.arrowleft)mx=-1;if(keys.d||keys.arrowright)mx=1;
+  const p=pChar.g.position;
+  if(Math.hypot(mx,mz)>0.05){
+    const l=Math.hypot(mx,mz),lim=11*(1+(S.expLv-1)*0.2);
+    p.x=Math.max(-lim,Math.min(lim,p.x+(mx/l)*S.spd*dt));
+    p.z=Math.max(-24,Math.min(23,p.z+(mz/l)*S.spd*dt));
+    pChar.g.rotation.y=Math.atan2(mx,mz);
   }
-  const px = previewGroup.position.x;
-  const pz = previewGroup.position.z;
-  createFridge(px, pz, state.furnRotation);
-  state.player.furnInventory--;
-  updateHUD();
-}
+  pLbl.v.set(p.x,2.9,p.z);
+  if(S.fMode)ghost.position.set(p.x+Math.sin(pChar.g.rotation.y)*2.8,1.3,p.z+Math.cos(pChar.g.rotation.y)*2.8);
 
-function pickupNearestFurniture() {
-  if (fridges.length <= 1) {
-    alert("Kam se kam 1 Fridge shop mein rehna zaroori hai!");
-    return;
-  }
-  if (state.player.furnInventory >= state.player.maxFurnInventory) {
-    alert("Aapka Furniture Inventory full hai! Upgrade menu se capacity badhayein.");
-    return;
-  }
-  let nearestIdx = -1;
-  let bestDist = 6.0;
-  fridges.forEach((f, idx) => {
-    const d = Math.hypot(playerChar.group.position.x - f.x, playerChar.group.position.z - f.z);
-    if (d < bestDist) {
-      bestDist = d;
-      nearestIdx = idx;
-    }
-  });
-  if (nearestIdx === -1) {
-    alert("Koi Fridge paas mein nahi hai! Fridge ke paas jaakar Pick Up dabayein.");
-    return;
-  }
-  const f = fridges[nearestIdx];
-  scene.remove(f.group);
-  f.label.div.remove();
-  const lblIdx = worldLabels.indexOf(f.label);
-  if (lblIdx > -1) worldLabels.splice(lblIdx, 1);
-  fridges.splice(nearestIdx, 1);
-  state.player.furnInventory++;
-  updateHUD();
-}
+  camera.position.set(p.x*0.6,18,p.z+15);camera.lookAt(p.x*0.4,0,p.z-2);
 
-function clearPlayerHands() {
-  state.player.carrying = [];
-  updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-  updateHUD();
-}
-
-// --- HUD & MODALS ---
-function updateHUD() {
-  document.getElementById('moneyText').innerText = Math.floor(state.money);
-  document.getElementById('carryText').innerText = `${state.player.carrying.length}/${state.player.maxCarry}`;
-  const cType = state.player.carrying.length === 0 ? "Empty" :
-    (state.player.carrying[0].type === 'ingredient' ? "🌾 Ingredients" : `🥤 ${SODA_BRANDS[state.player.carrying[0].brandId].name}`);
-  document.getElementById('carryType').innerText = cType;
-
-  const brand = SODA_BRANDS[state.activeBrand];
-  const bSpan = document.getElementById('activeBrandText');
-  bSpan.innerText = brand.name;
-  bSpan.style.color = brand.hex;
-
-  document.getElementById('furnCountText').innerText = state.player.furnInventory;
-  document.getElementById('furnMaxText').innerText = state.player.maxFurnInventory;
-}
-
-function openModal(id) {
-  renderModals();
-  document.getElementById(id).style.display = 'flex';
-}
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-}
-
-function renderModals() {
-  const uList = document.getElementById('upgradeList');
-  const speedCost = state.player.speedLevel * 80;
-  const carryCost = state.player.carryLevel * 100;
-  const furnCapCost = state.player.furnCapLevel * 120;
-  const farmerCost = 180 + state.employees.farmer * 200;
-  const labourCost = 220 + state.employees.labour * 250;
-  const cashierCost = 150 + state.employees.cashier * 200;
-
-  uList.innerHTML = `
-    <div class="shop-item">
-      <div class="shop-item-info">
-        <h4>🏃 Player Speed (Lv.${state.player.speedLevel})</h4>
-        <p>Tez daudo taaki shop aur factory jaldi sambhal sako</p>
-      </div>
-      <button class="buy-btn" onclick="buyUpgrade('speed', ${speedCost})">₹${speedCost}</button>
-    </div>
-    <div class="shop-item">
-      <div class="shop-item-info">
-        <h4>💪 Carrying Capacity (${state.player.maxCarry} Crates)</h4>
-        <p>Ek baar mein zyada Soda aur Ingredients uthao</p>
-      </div>
-      <button class="buy-btn" onclick="buyUpgrade('carry', ${carryCost})">₹${carryCost}</button>
-    </div>
-    <div class="shop-item">
-      <div class="shop-item-info">
-        <h4>🎒 Big Furniture Bag (${state.player.maxFurnInventory} Slots)</h4>
-        <p>Inventory mein zyada Fridge store karne ki capacity</p>
-      </div>
-      <button class="buy-btn" onclick="buyUpgrade('furnCap', ${furnCapCost})">₹${furnCapCost}</button>
-    </div>
-    <div class="shop-item">
-      <div class="shop-item-info">
-        <h4>🧑‍💼 Hire Cashier (${state.employees.cashier} Active)</h4>
-        <p>Counter par customers ki billing automatic karega</p>
-      </div>
-      <button class="buy-btn" onclick="buyUpgrade('cashier', ${cashierCost})">₹${cashierCost}</button>
-    </div>
-    <div class="shop-item">
-      <div class="shop-item-info">
-        <h4>👨‍🌾 Hire Farmer (${state.employees.farmer} Active)</h4>
-        <p>Farm se ingredients tod kar Factory mein dalega</p>
-      </div>
-      <button class="buy-btn" onclick="buyUpgrade('farmer', ${farmerCost})">₹${farmerCost}</button>
-    </div>
-    <div class="shop-item">
-      <div class="shop-item-info">
-        <h4>👷 Hire Factory Labour (${state.employees.labour} Active)</h4>
-        <p>Factory se Soda le jaakar Shop ke Fridge mein bharega</p>
-      </div>
-      <button class="buy-btn" onclick="buyUpgrade('labour', ${labourCost})">₹${labourCost}</button>
-    </div>
-  `;
-
-  const bList = document.getElementById('brandList');
-  let html = `
-    <div class="shop-item" style="border: 2px solid #10b981;">
-      <div class="shop-item-info">
-        <h4>🧊 Buy New Soda Fridge</h4>
-        <p>Aapke Furniture Bag mein jayega—kahin bhi place karein!</p>
-      </div>
-      <button class="buy-btn" onclick="buyExtraFridge(120)">₹120</button>
-    </div>
-    <div class="shop-item" style="border: 2px solid #3b82f6;">
-      <div class="shop-item-info">
-        <h4>🏗️ Expand Empire Area (Lv.${state.expansionLevel})</h4>
-        <p>Shop badi hogi aur zyada Customers aayenge!</p>
-      </div>
-      <button class="buy-btn" onclick="expandEmpire(${state.expansionLevel * 300})">₹${state.expansionLevel * 300}</button>
-    </div>
-  `;
-
-  SODA_BRANDS.forEach(b => {
-    const isSelected = state.activeBrand === b.id;
-    let btnHtml = '';
-    if (b.unlocked) {
-      btnHtml = `<button class="buy-btn ${isSelected ? 'active-brand' : ''}" onclick="selectBrand(${b.id})">${isSelected ? '✅ Producing' : 'Select'}</button>`;
-    } else {
-      btnHtml = `<button class="buy-btn" onclick="unlockBrand(${b.id})">Unlock ₹${b.unlockCost}</button>`;
-    }
-    html += `
-      <div class="shop-item">
-        <div class="shop-item-info">
-          <h4 style="color:${b.hex}">🥤 ${b.name}</h4>
-          <p>Selling Price: <b>₹${b.price}</b> per bottle</p>
-        </div>
-        ${btnHtml}
-      </div>
-    `;
-  });
-  bList.innerHTML = html;
-}
-
-function buyUpgrade(type, cost) {
-  if (state.money < cost) { alert("Paise kam hain! Customers ko Soda bech kar paise kamayein."); return; }
-  state.money -= cost;
-  if (type === 'speed') { state.player.speedLevel++; state.player.speed += 1.5; }
-  if (type === 'carry') { state.player.carryLevel++; state.player.maxCarry += 2; }
-  if (type === 'furnCap') { state.player.furnCapLevel++; state.player.maxFurnInventory += 2; }
-  if (type === 'cashier') { state.employees.cashier++; spawnWorker('cashier'); }
-  if (type === 'farmer') { state.employees.farmer++; spawnWorker('farmer'); }
-  if (type === 'labour') { state.employees.labour++; spawnWorker('labour'); }
-  updateHUD();
-  renderModals();
-}
-
-function buyExtraFridge(cost) {
-  if (state.money < cost) { alert("Paise kam hain!"); return; }
-  if (state.player.furnInventory >= state.player.maxFurnInventory) {
-    alert("Furniture Bag full hai! Pehle rakha hua Fridge place karein ya Bag upgrade karein.");
-    return;
-  }
-  state.money -= cost;
-  state.player.furnInventory++;
-  updateHUD();
-  renderModals();
-}
-
-function expandEmpire(cost) {
-  if (state.money < cost) { alert("Paise kam hain!"); return; }
-  state.money -= cost;
-  state.expansionLevel++;
-  const scaleX = 1 + (state.expansionLevel - 1) * 0.18;
-  shopFloor.scale.x = scaleX;
-  godownFloor.scale.x = scaleX;
-  factoryFloor.scale.x = scaleX;
-  farmFloor.scale.x = scaleX;
-  leftWall.position.x = -12 * scaleX;
-  rightWall.position.x = 12 * scaleX;
-  updateHUD();
-  renderModals();
-}
-
-function unlockBrand(id) {
-  const b = SODA_BRANDS[id];
-  if (state.money < b.unlockCost) { alert("Paise kam hain!"); return; }
-  state.money -= b.unlockCost;
-  b.unlocked = true;
-  state.activeBrand = id;
-  boilerMesh.material.color.setHex(b.color);
-  updateHUD();
-  renderModals();
-}
-
-function selectBrand(id) {
-  state.activeBrand = id;
-  boilerMesh.material.color.setHex(SODA_BRANDS[id].color);
-  updateHUD();
-  renderModals();
-}
-
-// --- MAIN GAME LOOP ---
-let lastTime = performance.now();
-let transferCooldown = 0;
-
-function animate(now) {
-  requestAnimationFrame(animate);
-  const dt = Math.min((now - lastTime) / 1000, 0.1);
-  lastTime = now;
-  transferCooldown = Math.max(0, transferCooldown - dt);
-
-  let mx = joyInput.x;
-  let mz = joyInput.y;
-  if (keys['w'] || keys['arrowup']) mz = -1;
-  if (keys['s'] || keys['arrowdown']) mz = 1;
-  if (keys['a'] || keys['arrowleft']) mx = -1;
-  if (keys['d'] || keys['arrowright']) mx = 1;
-
-  const pPos = playerChar.group.position;
-  if (Math.hypot(mx, mz) > 0.05) {
-    const len = Math.hypot(mx, mz);
-    const maxBoundX = 11 * (1 + (state.expansionLevel - 1) * 0.18);
-    pPos.x = Math.max(-maxBoundX, Math.min(maxBoundX, pPos.x + (mx / len) * state.player.speed * dt));
-    pPos.z = Math.max(-24, Math.min(23, pPos.z + (mz / len) * state.player.speed * dt));
-    playerChar.group.rotation.y = Math.atan2(mx, mz);
-  }
-  playerLabel.pos.set(pPos.x, 2.7, pPos.z);
-
-  if (state.furnitureMode) {
-    const forwardX = Math.sin(playerChar.group.rotation.y) * 2.8;
-    const forwardZ = Math.cos(playerChar.group.rotation.y) * 2.8;
-    previewGroup.position.set(pPos.x + forwardX, 0, pPos.z + forwardZ);
-  }
-
-  camera.position.x += (pPos.x * 0.7 - camera.position.x) * 6 * dt;
-  camera.position.y = 18;
-  camera.position.z += (pPos.z + 15 - camera.position.z) * 6 * dt;
-  camera.lookAt(pPos.x * 0.5, 0, pPos.z - 2);
-
-  farmPlots.forEach(plot => {
-    if (!plot.ready) {
-      plot.timer += dt;
-      plot.mesh.scale.setScalar(Math.min(1, plot.timer / 3.5));
-      if (plot.timer >= 3.5) {
-        plot.ready = true;
-        plot.mesh.scale.setScalar(1);
-      }
-    } else {
-      const dist = Math.hypot(pPos.x - plot.x, pPos.z - plot.z);
-      const canCarryIng = state.player.carrying.length < state.player.maxCarry &&
-        (state.player.carrying.length === 0 || state.player.carrying[0].type === 'ingredient');
-      if (dist < 2.2 && canCarryIng && transferCooldown <= 0) {
-        plot.ready = false;
-        plot.timer = 0;
-        plot.mesh.scale.setScalar(0.1);
-        state.player.carrying.push({ type: 'ingredient' });
-        updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-        updateHUD();
-        transferCooldown = 0.2;
-      }
+  // Farm
+  plots.forEach(pl=>{
+    if(!pl.ok){pl.t+=dt;pl.m.scale.setScalar(Math.min(1,pl.t/3));if(pl.t>=3)pl.ok=true;}
+    else if(Math.hypot(p.x-pl.x,p.z-pl.z)<2.2&&cd<=0&&S.hand.length<S.maxCap&&(!S.hand.length||S.hand[0].t==='ing')){
+      pl.ok=false;pl.t=0;pl.m.scale.setScalar(0.1);S.hand.push({t:'ing'});drawStack(pChar.st,S.hand);syncUI();cd=0.2;
     }
   });
 
-  if (factoryObj.rawCount > 0 && factoryObj.sodaCount < factoryObj.maxStock) {
-    factoryObj.progress += dt;
-    boilerMesh.scale.y = 1 + Math.sin(now * 0.015) * 0.06;
-    if (factoryObj.progress >= 1.8) {
-      factoryObj.progress = 0;
-      factoryObj.rawCount--;
-      factoryObj.sodaCount++;
-    }
+  // Factory
+  if(fact.raw>0&&fact.soda<12){fact.prog+=dt;if(fact.prog>=1.6){fact.prog=0;fact.raw--;fact.soda++;}}
+  fInL.d.innerHTML=`📥 Ingredients (${fact.raw})`;fOutL.d.innerHTML=`📤 ${BRANDS[S.brand].n} (${fact.soda})`;
+  if(Math.hypot(p.x-fact.inX,p.z-fact.inZ)<2.3&&cd<=0&&S.hand.length&&S.hand[0].t==='ing'){
+    S.hand.pop();fact.raw++;drawStack(pChar.st,S.hand);syncUI();cd=0.18;
   }
-  factoryInLabel.div.innerHTML = `📥 Drop Ingredients (${factoryObj.rawCount})`;
-  factoryOutLabel.div.innerHTML = `📤 ${SODA_BRANDS[state.activeBrand].name} (${factoryObj.sodaCount})`;
-
-  if (Math.hypot(pPos.x - factoryObj.inX, pPos.z - factoryObj.inZ) < 2.3 && transferCooldown <= 0) {
-    if (state.player.carrying.length > 0 && state.player.carrying[0].type === 'ingredient') {
-      state.player.carrying.pop();
-      factoryObj.rawCount++;
-      updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-      updateHUD();
-      transferCooldown = 0.18;
-    }
+  if(Math.hypot(p.x-fact.outX,p.z-fact.outZ)<2.3&&cd<=0&&fact.soda>0&&S.hand.length<S.maxCap&&(!S.hand.length||S.hand[0].t==='soda')){
+    fact.soda--;S.hand.push({t:'soda',b:S.brand});drawStack(pChar.st,S.hand);syncUI();cd=0.18;
   }
 
-  if (Math.hypot(pPos.x - factoryObj.outX, pPos.z - factoryObj.outZ) < 2.3 && transferCooldown <= 0) {
-    const canCarrySoda = state.player.carrying.length < state.player.maxCarry &&
-      (state.player.carrying.length === 0 || state.player.carrying[0].type === 'soda');
-    if (factoryObj.sodaCount > 0 && canCarrySoda) {
-      factoryObj.sodaCount--;
-      state.player.carrying.push({ type: 'soda', brandId: state.activeBrand });
-      updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-      updateHUD();
-      transferCooldown = 0.18;
-    }
+  // Godown & Trash
+  if(Math.hypot(p.x-6,p.z+0.5)<2&&S.hand.length)emptyH();
+  if(Math.hypot(p.x-gRack.x,p.z-gRack.z)<2.4&&cd<=0){
+    if(S.hand.length&&S.hand[0].t==='soda'&&gRack.items.length<gRack.max){gRack.items.push(S.hand.pop());drawStack(pChar.st,S.hand);syncUI();cd=0.2;}
+    else if(!S.hand.length&&gRack.items.length){S.hand.push(gRack.items.pop());drawStack(pChar.st,S.hand);syncUI();cd=0.2;}
   }
+  gLbl.d.innerHTML=`📦 Godown (${gRack.items.length}/${gRack.max})`;
 
-  if (Math.hypot(pPos.x - trashBin.x, pPos.z - trashBin.z) < 2.0 && state.player.carrying.length > 0) {
-    clearPlayerHands();
-  }
-
-  if (Math.hypot(pPos.x - godownRack.x, pPos.z - godownRack.z) < 2.5 && transferCooldown <= 0) {
-    if (state.player.carrying.length > 0 && state.player.carrying[0].type === 'soda' && godownRack.items.length < godownRack.max) {
-      godownRack.items.push(state.player.carrying.pop());
-      updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-      updateHUD();
-      transferCooldown = 0.2;
-    } else if (state.player.carrying.length === 0 && godownRack.items.length > 0) {
-      state.player.carrying.push(godownRack.items.pop());
-      updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-      updateHUD();
-      transferCooldown = 0.2;
+  // Fridges & Cash
+  fridges.forEach(f=>{
+    if(Math.hypot(p.x-f.x,p.z-f.z)<2.5&&cd<=0&&S.hand.length&&S.hand[0].t==='soda'&&f.items.length<f.max){
+      f.items.push(S.hand.pop());drawStack(pChar.st,S.hand);syncUI();cd=0.18;
     }
-  }
-  godownLabel.div.innerHTML = `📦 Godown Rack (${godownRack.items.length}/${godownRack.max})`;
+    f.l.d.innerHTML=`🧊 Fridge (${f.items.length}/${f.max})`;
+  });
+  if(Math.hypot(p.x-(cnt.x+3.2),p.z-cnt.z)<2.4&&cnt.cash>0){S.money+=cnt.cash;cnt.cash=0;syncUI();}
+  cashL.d.innerHTML=`💵 Cash: ₹${cnt.cash}`;
 
-  fridges.forEach(f => {
-    const dist = Math.hypot(pPos.x - f.x, pPos.z - f.z);
-    if (dist < 2.5 && transferCooldown <= 0) {
-      if (state.player.carrying.length > 0 && state.player.carrying[0].type === 'soda' && f.items.length < f.max) {
-        f.items.push(state.player.carrying.pop());
-        updateCarryVisuals(playerChar.stackGroup, state.player.carrying);
-        updateHUD();
-        transferCooldown = 0.18;
-      }
+  // AI Workers
+  workers.forEach(w=>{
+    const wp=w.ch.g.position;
+    if(w.role==='farmer'){
+      if(!w.hand.length){const pl=plots.find(x=>x.ok);if(pl&&stepTo(wp,pl.x,pl.z,5.5,dt)){pl.ok=false;pl.t=0;w.hand.push({t:'ing'});drawStack(w.ch.st,w.hand);}}
+      else if(stepTo(wp,fact.inX,fact.inZ,5.5,dt)){w.hand.pop();fact.raw++;drawStack(w.ch.st,w.hand);}
+    }else if(w.role==='labour'){
+      if(!w.hand.length){if(fact.soda>0&&stepTo(wp,fact.outX,fact.outZ,6,dt)){fact.soda--;w.hand.push({t:'soda',b:S.brand});drawStack(w.ch.st,w.hand);}}
+      else{const f=fridges.find(x=>x.items.length<x.max)||fridges[0];if(f&&stepTo(wp,f.x,f.z,6,dt)&&f.items.length<f.max){f.items.push(w.hand.pop());drawStack(w.ch.st,w.hand);}}
     }
-    f.label.div.innerHTML = `🧊 Fridge (${f.items.length}/${f.max})`;
+    w.l.v.set(wp.x,2.8,wp.z);
   });
 
-  if (Math.hypot(pPos.x - (counterObj.x + 3.2), pPos.z - counterObj.z) < 2.4 && counterObj.cashOnTable > 0) {
-    state.money += counterObj.cashOnTable;
-    counterObj.cashOnTable = 0;
-    updateHUD();
+  // Customers
+  cTimer+=dt;
+  if(cTimer>3.2&&custs.length<4+S.expLv*2&&fridges.length){
+    cTimer=0;const ch=makeChar(0x38bdf8);ch.g.position.set((Math.random()-0.5)*12,0,25);
+    custs.push({ch,st:'toF',f:fridges[Math.floor(Math.random()*fridges.length)],it:null});
   }
-  cashPileLabel.div.innerHTML = `💵 Cash: ₹${counterObj.cashOnTable}`;
+  const canBill=Math.hypot(p.x-cnt.x,p.z-(cnt.z-2))<2.5||S.emp.cashier>0;
+  for(let i=custs.length-1;i>=0;i--){
+    const c=custs[i],cp=c.ch.g.position;
+    if(c.st==='toF'){if(!fridges.includes(c.f))c.f=fridges[0];if(c.f&&stepTo(cp,c.f.x,c.f.z+1.6,5,dt))c.st='waitS';}
+    else if(c.st==='waitS'){if(c.f&&c.f.items.length){c.it=c.f.items.pop();drawStack(c.ch.st,[c.it]);c.st='toC';}}
+    else if(c.st==='toC'){if(stepTo(cp,cnt.x,cnt.z+1.8,5,dt))c.st='waitB';}
+    else if(c.st==='waitB'&&canBill){cnt.t+=dt;if(cnt.t>=0.6){cnt.t=0;cnt.cash+=BRANDS[c.it.b].p;drawStack(c.ch.st,[]);c.st='exit';}}
+    else if(c.st==='exit'&&stepTo(cp,10,26,6,dt)){scene.remove(c.ch.g);custs.splice(i,1);}
+  }
 
-  aiWorkers.forEach(w => {
-    const wPos = w.char.group.position;
-    if (w.role === 'farmer') {
-      if (w.carrying.length === 0) {
-        const readyPlot = farmPlots.find(p => p.ready);
-        if (readyPlot && moveTowards(wPos, readyPlot.x, readyPlot.z, 5.5, dt)) {
-          readyPlot.ready = false;
-          readyPlot.timer = 0;
-          w.carrying.push({ type: 'ingredient' });
-          updateCarryVisuals(w.char.stackGroup, w.carrying);
-        }
-      } else {
-        if (moveTowards(wPos, factoryObj.inX, factoryObj.inZ, 5.5, dt)) {
-          w.carrying.pop();
-          factoryObj.rawCount++;
-          updateCarryVisuals(w.char.stackGroup, w.carrying);
-        }
-      }
-    } else if (w.role === 'labour') {
-      if (w.carrying.length === 0) {
-        if (factoryObj.sodaCount > 0 && moveTowards(wPos, factoryObj.outX, factoryObj.outZ, 6.0, dt)) {
-          factoryObj.sodaCount--;
-          w.carrying.push({ type: 'soda', brandId: state.activeBrand });
-          updateCarryVisuals(w.char.stackGroup, w.carrying);
-        }
-      } else {
-        const needyFridge = fridges.find(f => f.items.length < f.max) || fridges[0];
-        if (needyFridge && moveTowards(wPos, needyFridge.x, needyFridge.z, 6.0, dt)) {
-          if (needyFridge.items.length < needyFridge.max) {
-            needyFridge.items.push(w.carrying.pop());
-            updateCarryVisuals(w.char.stackGroup, w.carrying);
-          }
-        }
-      }
-    }
-    w.lbl.pos.set(wPos.x, 2.5, wPos.z);
+  wLbls.forEach(o=>{
+    const v=o.v.clone().project(camera);
+    o.d.style.display=v.z>1?'none':'block';
+    o.d.style.left=`${(v.x*0.5+0.5)*window.innerWidth}px`;
+    o.d.style.top=`${(-v.y*0.5+0.5)*window.innerHeight}px`;
   });
-
-  customerSpawnTimer += dt;
-  if (customerSpawnTimer >= Math.max(1.8, 4.5 - state.expansionLevel * 0.5)) {
-    customerSpawnTimer = 0;
-    spawnCustomer();
-  }
-
-  const playerAtCounter = Math.hypot(pPos.x - counterObj.x, pPos.z - (counterObj.z - 2.0)) < 2.5;
-  const canCheckout = playerAtCounter || state.employees.cashier > 0;
-
-  for (let i = customers.length - 1; i >= 0; i--) {
-    const c = customers[i];
-    const cPos = c.char.group.position;
-
-    if (c.state === 'walk_to_fridge') {
-      if (!fridges.includes(c.targetFridge)) c.targetFridge = fridges[0];
-      if (c.targetFridge && moveTowards(cPos, c.targetFridge.x, c.targetFridge.z + 1.6, 5.0, dt)) {
-        c.state = 'wait_soda';
-      }
-    } else if (c.state === 'wait_soda') {
-      if (c.targetFridge && c.targetFridge.items.length > 0) {
-        c.item = c.targetFridge.items.pop();
-        updateCarryVisuals(c.char.stackGroup, [c.item]);
-        c.state = 'walk_to_counter';
-      }
-    } else if (c.state === 'walk_to_counter') {
-      if (moveTowards(cPos, counterObj.x, counterObj.z + 1.8, 5.0, dt)) {
-        c.state = 'wait_bill';
-      }
-    } else if (c.state === 'wait_bill') {
-      if (canCheckout) {
-        counterObj.cashTimer += dt;
-        if (counterObj.cashTimer >= 0.7) {
-          counterObj.cashTimer = 0;
-          const price = SODA_BRANDS[c.item.brandId].price;
-          counterObj.cashOnTable += price;
-          updateCarryVisuals(c.char.stackGroup, []);
-          c.state = 'leave';
-        }
-      }
-    } else if (c.state === 'leave') {
-      if (moveTowards(cPos, 10, 26, 6.0, dt)) {
-        scene.remove(c.char.group);
-        customers.splice(i, 1);
-      }
-    }
-  }
-
-  updateWorldLabels();
-  renderer.render(scene, camera);
+  renderer.render(scene,camera);
 }
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-updateHUD();
-requestAnimationFrame(animate);
+window.onresize=()=>{camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);};
+syncUI();requestAnimationFrame(loop);
 </script>
 </body>
 </html>
